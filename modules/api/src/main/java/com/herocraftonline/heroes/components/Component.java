@@ -9,8 +9,9 @@ import com.herocraftonline.heroes.characters.Hero;
  * as Hero files. <br />
  * <br />
  * Components must implement the following:
- * {@code public static Component deserialize(org.spongepowered.api.util.config.ConfigFile)} that deserializes
+ * {@code public static Component deserialize(org.spongepowered.api.service.persistence.data.DataView)} that deserializes
  * a Component from preexisting stored settings
+ * The DataView
  */
 public interface Component {
     /**
@@ -36,8 +37,11 @@ public interface Component {
 
     /**
      * Actions to take when a component is saved. The guarantee is made that the given hero has the component
+     * TODO pending persistence API PR Merge
      * @param hero The Hero to which the component is registered
+     * @returns A {@link DataView} representation that can then be saved to the Hero
      */
-    void onSave(Hero hero);
+    //DataView onSave(Hero hero);
+
 
 }

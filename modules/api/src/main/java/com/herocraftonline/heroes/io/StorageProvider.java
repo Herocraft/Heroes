@@ -74,14 +74,14 @@ public interface StorageProvider {
      */
     boolean isExclusiveSave();
     /**
-     * Loads a Hero from storage
+     * Loads a Hero from storage, including stored components
      * @param uid The unique identifier of the {@link org.spongepowered.api.entity.player.Player} represented by the
      *            Hero being loaded
      * @return The loaded Hero from storage, or null if no matching Hero found
      */
     Hero loadHero(UUID uid);
     /**
-     * Saves the given {@link Hero}
+     * Saves the given {@link Hero}, including any attached components and respective {@link DataView} objects
      * @param hero The Hero to save
      * @param now Whether this save should be done immediately/synchronously - note that implementation/respect of this
      *            parameter is optional depending on implementation, although generally that means that
@@ -90,4 +90,11 @@ public interface StorageProvider {
      *         asynchronous saving
      */
     boolean saveHero(Hero hero, boolean now);
+
+    /**
+     * Removes a given Hero from storage
+     * @param hero The hero to remove
+     * @return The removed Hero, or null if none removed
+     */
+    Hero removeHero(Hero hero);
 }
