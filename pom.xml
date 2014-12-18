@@ -1,0 +1,86 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.herocraftonline.heroes</groupId>
+	<artifactId>Heroes-Parent</artifactId>
+	<packaging>pom</packaging>
+	<version>Parent</version>
+	<name>Heroes Parent Project</name>
+	<url>http://www.herocraftonline.com</url>
+
+	<modules>
+        <module>modules/api</module>
+	</modules>
+
+	<build>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.0</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default-deploy</id>
+						<phase>deploy</phase>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>sponge-repo</id>
+			<url>http://repo.spongepowered.org/sponge/maven/</url>
+		</repository>
+		<repository>
+			<id>heroes-repo</id>
+			<url>http://nexus.theyeticave.net/content/groups/herocraft/</url>
+		</repository>
+		<repository>
+			<id>sms-dropbox</id>
+			<url>http://dl.dropboxusercontent.com/u/12467600/maven-repo</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.spongepowered</groupId>
+			<artifactId>spongeapi</artifactId>
+			<version>[1.0,)</version>
+		</dependency>
+	</dependencies>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<ciManagement>
+		<system>Jenkins</system>
+		<url>ci.herocraftonline.com</url>
+	</ciManagement>
+
+	<distributionManagement>
+		<repository>
+			<id>heroes-repo</id>
+			<name>Public Releases</name>
+			<url>http://nexus.theyeticave.net/content/repositories/pub_releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>heroes-repo</id>
+			<name>Public Releases</name>
+			<url>http://nexus.theyeticave.net/content/repositories/pub_snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+
+</project>
