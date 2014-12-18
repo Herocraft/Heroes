@@ -7,6 +7,7 @@ import com.herocraftonline.heroes.characters.classes.HeroClassManager;
 import com.herocraftonline.heroes.characters.party.PartyManager;
 import com.herocraftonline.heroes.command.CommandHandler;
 import com.herocraftonline.heroes.configuration.ConfigManager;
+import com.herocraftonline.heroes.io.StorageManager;
 import com.herocraftonline.heroes.skills.SkillConfigManager;
 import com.herocraftonline.heroes.skills.SkillManager;
 
@@ -32,7 +33,8 @@ public interface HeroesPlugin {
 
     SkillManager getSkillManager();
 
-    //StorageManager getStorageManager()
+    StorageManager getStorageManager();
+
     //getPartyChannelManager() TODO
 
 }
