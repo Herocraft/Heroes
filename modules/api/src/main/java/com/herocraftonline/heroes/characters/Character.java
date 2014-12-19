@@ -6,10 +6,14 @@ import com.herocraftonline.heroes.effects.Effect;
 import java.util.Set;
 
 /**
- * Represents a character, which is Heroes' internal representation of living entities. To obtain a Character instance,
- * use {@link CharacterManager#getCharacter(java.util.UUID)},
+ * <p>Represents a character, which is Heroes' representation of any entities that can cast a skill, have effects
+ * applied to them, or have </p>
+ * <p>To obtain a Character instance, use {@link CharacterManager#getCharacter(java.util.UUID)},
  * {@link CharacterManager#getCharacter(org.spongepowered.api.entity.living.Living)}
- * or an appropriate alternate method depending on entity type.
+ * or an appropriate alternate method depending on entity type.</p>
+ * <p>It is important to note that characters are not restricted to living entities - for instance the Beacon
+ * character class in the com.herocraftonline.heroes:heroes-common maven module is designed for use with static
+ * entities and/or that are immobile/persistent at a certain point in the map(</p>
  */
 public interface Character {
 
@@ -24,7 +28,6 @@ public interface Character {
 
     /**
      * Adds the given effect to the Character, initiating its first tick and calling {@link Effect#apply(Character)},
-     * which in turn calls {@link Effect#applyToHero(Hero)} or {@link Effect#applyToCreature(Creature)} as appropriate
      * @param effect The effect to add, will replace any preexisting effects of the same name
      */
     void addEffect(Effect effect);
