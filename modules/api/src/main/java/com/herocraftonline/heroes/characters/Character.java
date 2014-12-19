@@ -12,7 +12,7 @@ import java.util.Set;
  * {@link CharacterManager#getCharacter(org.spongepowered.api.entity.living.Living)}
  * or an appropriate alternate method depending on entity type.</p>
  * <p>It is important to note that characters are not restricted to living entities - for instance the Beacon
- * character class in the com.herocraftonline.heroes:heroes-common maven module is designed for use with static
+ * character class in the com.herocraftonline.heroes:Heroes-Common maven module is designed for use with static
  * entities and/or that are immobile/persistent at a certain point in the map(</p>
  */
 public interface Character {

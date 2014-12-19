@@ -7,7 +7,7 @@ import com.herocraftonline.heroes.characters.Character;
  * designed to necessarily be persistent - in fact one of the most common intended uses for the Effect class,
  * as (temporary) markers for skill effects, demonstrates that this is not the case at all. </p>
  * <p>Common implementations of Effect classes and subclasses can be found under the maven module
- * {@code com.herocraftonline.heroes:heroes-common}, although no guarantees are made as to code persistence</p>
+ * {@code com.herocraftonline.heroes:Heroes-Common}, although no guarantees are made as to code persistence</p>
  */
 public interface Effect {
 
