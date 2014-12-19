@@ -1,5 +1,6 @@
 package com.herocraftonline.heroes.components;
 
+import com.herocraftonline.heroes.characters.Character;
 import com.herocraftonline.heroes.characters.Hero;
 
 /**
@@ -21,24 +22,25 @@ public interface Component {
     String getName();
 
     /**
-     * Actions to take when a component is attached to a given Hero - this can be done when a Hero
-     * is initially loaded from storage (in which the component is already registered with the Hero)
-     * or when a component is initially registered with a Hero via {@link Hero#registerComponent()}.<br />
-     * @param hero The Hero to which the component is registered
+     * Actions to take when a component is attached to a given Character - this can be done when a Character
+     * is initially loaded from storage (in which the component is already registered with the Character)
+     * or when a component is initially registered with a Character via
+     * {@link com.herocraftonline.heroes.characters.Character#registerComponent(Component)}.
+     * @param character The Character to which the component is registered
      */
-    void onAttach(Hero hero);
+    void onAttach(Character character);
 
     /**
-     * Actions to take when a component is unregistered from the Hero. Note that storage providers should
+     * Actions to take when a component is unregistered from the Character. Note that storage providers should
      * automatically remove configuration keys associated with this component if it has been unregistered
-     * @param hero The Hero from which the component is being registered
+     * @param character The Character from which the component is being registered
      */
-    void onRemove(Hero hero);
+    void onRemove(Character character);
 
     /**
-     * Actions to take when a component is saved. The guarantee is made that the given hero has the component
+     * Actions to take when a component is saved. The guarantee is made that the given character has the component
      * TODO pending persistence API PR Merge
-     * @param hero The Hero to which the component is registered
+     * @param character The Character to which the component is registered
      * @returns A {@link DataView} representation that can then be saved to the Hero
      */
     //DataView onSave(Hero hero);

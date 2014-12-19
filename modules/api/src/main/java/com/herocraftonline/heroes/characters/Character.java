@@ -1,5 +1,6 @@
 package com.herocraftonline.heroes.characters;
 
+import com.herocraftonline.heroes.components.Component;
 import com.herocraftonline.heroes.effects.Effect;
 
 import java.util.Set;
@@ -18,6 +19,8 @@ public interface Character {
      * custom name does not exist
      */
     String getName();
+
+    // Effect Methods
 
     /**
      * Adds the given effect to the Character, initiating its first tick and calling {@link Effect#apply(Character)},
@@ -44,5 +47,35 @@ public interface Character {
      * @return Whether the character has the effect
      */
     boolean hasEffect(Effect effect);
+
+    // Component Methods
+
+    /**
+     * Checks whether a component is attached/registered with this character
+     * @param name The name of the component, corresponding to value of {@link Component#getName()}, case sensitive
+     * @return True if the component is registered with this Hero, false otherwise
+     */
+    public boolean hasComponent(String name);
+
+    /**
+     * Retrieves a component instance attached/registered with this character, if it exists
+     * @param name The name of the component, corresponding to value of {@link Component#getName()}, case sensitive
+     * @return The corresponding component, or null if no matching component exists
+     */
+    public Component getComponent(String name);
+
+    /**
+     * Adds a component to this Hero, and calls {@link Component#onAttach(Character)} with this Hero as the parameter
+     * @param component The component to register
+     * @return False if an error occurs during attach, true otherwise
+     */
+    public boolean registerComponent(Component component);
+
+    /**
+     * Removes a component from this Hero, and calls {@link Component#onRemove(Character)} with this Hero as the parameter
+     * @param name he name of the component, corresponding to value of {@link Component#getName()}, case sensitive
+     * @return The removed component, or null no matching component exists
+     */
+    public Component unregisterComponent(String name);
 
 }
