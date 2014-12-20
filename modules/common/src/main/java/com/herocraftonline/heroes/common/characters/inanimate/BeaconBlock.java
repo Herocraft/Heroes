@@ -1,6 +1,7 @@
 package com.herocraftonline.heroes.common.characters.inanimate;
 
 import org.spongepowered.api.block.BlockLoc;
+import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
@@ -12,6 +13,11 @@ public class BeaconBlock extends Beacon {
 
     public BeaconBlock(BlockLoc block) {
         this.block = block;
+    }
+
+    @Override
+    public Entity getEntity() {
+        return null;
     }
 
     @Override

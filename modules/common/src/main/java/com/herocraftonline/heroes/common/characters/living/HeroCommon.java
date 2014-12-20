@@ -2,6 +2,7 @@ package com.herocraftonline.heroes.common.characters.living;
 
 import com.herocraftonline.heroes.characters.Hero;
 import com.herocraftonline.heroes.common.characters.CharacterCommon;
+import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.world.Location;
 
@@ -16,6 +17,11 @@ public class HeroCommon extends CharacterCommon implements Hero {
     }
 
     @Override
+    public Entity getEntity() {
+        return player;
+    }
+
+    @Override
     public Location getLocation() {
         return player.getLocation();
     }
@@ -23,6 +29,12 @@ public class HeroCommon extends CharacterCommon implements Hero {
     @Override
     public String getName() {
         return player.getName();
+    }
+
+    @Override
+    public Player getPlayer() {
+        return player
+                ;
     }
 
     @Override

@@ -59,8 +59,8 @@ public abstract class CharacterCommon implements CharacterBase {
     @Override
     public boolean registerComponent(Component component) {
         if (!components.containsKey(component.getName())) {
-            components.put(component.getName(), component);
             component.onAttach(this);
+            components.put(component.getName(), component);
             return true;
         } else {
             Heroes.getInstance().getLogger().log(Level.WARNING, "Duplicate component registration "
@@ -71,7 +71,7 @@ public abstract class CharacterCommon implements CharacterBase {
 
     @Override
     public Component unregisterComponent(String name) {
-        Component removed = components.get(name);
+        Component removed = components.remove(name);
         if (removed != null) {
             removed.onRemove(this);
         }
