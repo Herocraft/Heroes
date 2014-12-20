@@ -9,13 +9,19 @@ import com.herocraftonline.heroes.characters.CharacterBase;
  * <p>Common implementations of Effect classes and subclasses can be found under the maven module
  * {@code com.herocraftonline.heroes:Heroes-Common}, although no guarantees are made as to code persistence</p>
  */
-public interface Effect {
+public interface EffectBase {
 
     /**
      * <p>Called when an effect is applied (added) to a Character</p>
      * @param character The character to which the effect is being applied
      */
     void apply(CharacterBase character);
+
+    /**
+     * <p>Called when an effect is removed from a Character</p>
+     * @param character The character from which the effect is being removed
+     */
+    void remove(CharacterBase character);
 
     /**
      * @return An ideally unique string identifier (human readable) for this effect

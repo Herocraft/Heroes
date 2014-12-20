@@ -1,7 +1,7 @@
 package com.herocraftonline.heroes.characters;
 
 import com.herocraftonline.heroes.components.Component;
-import com.herocraftonline.heroes.effects.Effect;
+import com.herocraftonline.heroes.effects.EffectBase;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.world.Location;
@@ -57,22 +57,22 @@ public interface CharacterBase {
     // Effect Methods
 
     /**
-     * Adds the given effect to the Character, initiating its first tick and calling {@link Effect#apply(CharacterBase)},
+     * Adds the given effect to the Character, initiating its first tick and calling {@link com.herocraftonline.heroes.effects.EffectBase#apply(CharacterBase)},
      * @param effect The effect to add, will replace any preexisting effects of the same name
      */
-    void addEffect(Effect effect);
+    void addEffect(EffectBase effect);
 
     /**
      * Attempts to retrieve a given effect that is linked to the character
      * @param name The name of the effect to retrieve, non case-sensitive
      * @return The effect if it exists, or null if it does not
      */
-    Effect getEffect(String name);
+    EffectBase getEffect(String name);
 
     /**
      * @return A copy of all the effects currently attached to the character
      */
-    Collection<Effect> getEffects();
+    Collection<EffectBase> getEffects();
 
     /**
      * Checks whether this character has a given Effect
@@ -86,7 +86,7 @@ public interface CharacterBase {
      * @param name The name of the effect to remove, non case-sensitive
      * @return The removed effect, or null if none matching
      */
-    Effect removeEffect(String name);
+    EffectBase removeEffect(String name);
 
     // Component Methods
 

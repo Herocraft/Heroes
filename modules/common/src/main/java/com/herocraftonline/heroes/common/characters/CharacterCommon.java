@@ -3,7 +3,7 @@ package com.herocraftonline.heroes.common.characters;
 import com.herocraftonline.heroes.Heroes;
 import com.herocraftonline.heroes.characters.CharacterBase;
 import com.herocraftonline.heroes.components.Component;
-import com.herocraftonline.heroes.effects.Effect;
+import com.herocraftonline.heroes.effects.EffectBase;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -13,26 +13,26 @@ import java.util.logging.Level;
 
 public abstract class CharacterCommon implements CharacterBase {
     private final Map<String, Component> components;
-    private final Map<String, Effect> effects;
+    private final Map<String, EffectBase> effects;
 
     public CharacterCommon() {
         components = new HashMap<String, Component>();
-        effects = new HashMap<String, Effect>();
+        effects = new HashMap<String, EffectBase>();
     }
 
     @Override
-    public void addEffect(Effect effect) {
+    public void addEffect(EffectBase effect) {
         effect.apply(this);
         effects.put(effect.getName().toLowerCase(), effect);
     }
 
     @Override
-    public Effect getEffect(String name) {
+    public EffectBase getEffect(String name) {
         return effects.get(name.toLowerCase());
     }
 
     @Override
-    public Collection<Effect> getEffects() {
+    public Collection<EffectBase> getEffects() {
         return Collections.unmodifiableCollection(effects.values());
     }
 
@@ -42,7 +42,7 @@ public abstract class CharacterCommon implements CharacterBase {
     }
 
     @Override
-    public Effect removeEffect(String name) {
+    public EffectBase removeEffect(String name) {
         return effects.remove(name.toLowerCase());
     }
 
