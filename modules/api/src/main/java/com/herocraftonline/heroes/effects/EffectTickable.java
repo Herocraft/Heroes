@@ -6,7 +6,7 @@ import com.herocraftonline.heroes.characters.CharacterBase;
  * Tickable effects are effects that can be registered with the EffectManager to be ticked - that is to say they perform
  * a certain action (or possibly multiple) at some point in the future
  */
-public interface EffectTickable {
+public interface EffectTickable extends EffectBase {
 
     /**
      * @param currTime The time in milliseconds when method is called

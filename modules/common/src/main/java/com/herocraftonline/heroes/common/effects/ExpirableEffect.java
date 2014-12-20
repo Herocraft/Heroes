@@ -20,6 +20,7 @@ public class ExpirableEffect extends BasicEffect implements EffectExpirable {
 
     @Override
     public void apply(final CharacterBase character) {
+        super.apply(character);
         applyTime = System.currentTimeMillis();
         expireTime = applyTime + length;
         originalExpireTime = expireTime;
@@ -28,6 +29,7 @@ public class ExpirableEffect extends BasicEffect implements EffectExpirable {
 
     @Override
     public void remove(final CharacterBase character) {
+        super.remove(character);
         removed = true;
     }
 

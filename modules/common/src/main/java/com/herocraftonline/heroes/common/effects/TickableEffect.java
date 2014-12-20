@@ -15,11 +15,13 @@ public abstract class TickableEffect extends BasicEffect implements EffectTickab
 
     @Override
     public void apply(CharacterBase character) {
+        super.apply(character);
         nextTick = System.currentTimeMillis();
     }
 
     @Override
     public void remove(CharacterBase character) {
+        super.remove(character);
         removed = true;
     }
 

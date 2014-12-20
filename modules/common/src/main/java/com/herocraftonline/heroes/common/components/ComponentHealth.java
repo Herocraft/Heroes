@@ -10,7 +10,7 @@ public class ComponentHealth implements Component {
     private double maxHealth;
     private double defaultHealth;
 
-    //public ComponentHealth(DataView root) { //TODO pending persistence API
+    //public ComponentHealth(DataView root) {
 
     //}
 

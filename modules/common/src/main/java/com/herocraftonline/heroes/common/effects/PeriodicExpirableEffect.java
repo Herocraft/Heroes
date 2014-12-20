@@ -17,6 +17,7 @@ public abstract class PeriodicExpirableEffect extends ExpirableEffect implements
 
     @Override
     public void apply(CharacterBase character) {
+        super.apply(character);
         nextTick = System.currentTimeMillis();
     }
 

@@ -8,6 +8,7 @@ public class BasicEffect implements EffectBase {
 
     protected HeroesPlugin plugin;
     protected String name;
+    protected CharacterBase character;
 
     public BasicEffect(HeroesPlugin plugin, String name) {
         this.plugin = plugin;
@@ -16,12 +17,19 @@ public class BasicEffect implements EffectBase {
 
     @Override
     public void apply(CharacterBase character) {
+        this.character = character;
         return;
     }
 
     @Override
     public void remove(CharacterBase character) {
+        this.character = null;
         return;
+    }
+
+    @Override
+    public CharacterBase getCharacter() {
+        return this.character;
     }
 
     @Override

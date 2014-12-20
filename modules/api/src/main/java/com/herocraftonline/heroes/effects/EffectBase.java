@@ -24,6 +24,11 @@ public interface EffectBase {
     void remove(CharacterBase character);
 
     /**
+     * @return The character to which this effect is attached
+     */
+    CharacterBase getCharacter();
+
+    /**
      * @return An ideally unique string identifier (human readable) for this effect
      */
     String getName();
