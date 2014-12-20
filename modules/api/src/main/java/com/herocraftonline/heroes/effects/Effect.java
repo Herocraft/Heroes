@@ -16,4 +16,9 @@ public interface Effect {
      * @param character The character to which the effect is being applied
      */
     void apply(Character character);
+
+    /**
+     * @return An ideally unique string identifier (human readable) for this effect
+     */
+    String getName();
 }

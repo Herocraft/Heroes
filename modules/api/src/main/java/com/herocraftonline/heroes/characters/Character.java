@@ -3,7 +3,7 @@ package com.herocraftonline.heroes.characters;
 import com.herocraftonline.heroes.components.Component;
 import com.herocraftonline.heroes.effects.Effect;
 
-import java.util.Set;
+import java.util.Collection;
 
 /**
  * <p>Represents a character, which is Heroes' representation of any entities that can cast a skill, have effects
@@ -42,7 +42,7 @@ public interface Character {
     /**
      * @return A copy of all the effects currently attached to the character
      */
-    Set<Effect> getEffects();
+    Collection<Effect> getEffects();
 
     /**
      * Checks whether this character has a given Effect
