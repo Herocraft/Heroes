@@ -2,7 +2,6 @@ package com.herocraftonline.heroes.effects;
 
 import com.herocraftonline.heroes.plugin.HeroesPlugin;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -41,7 +40,7 @@ public class EffectManagerImpl implements EffectManager {
     }
 
     private void tick() {
-        for (EffectTickable remove : new ArrayList<EffectTickable>(effectRemoveQueue)) {
+        for (EffectTickable remove : new HashSet<EffectTickable>(effectRemoveQueue)) {
             registeredEffects.remove(remove);
         }
         effectRemoveQueue.clear();
