@@ -15,5 +15,13 @@
     <artifactId>Heroes-Common</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.herocraftonline.heroes</groupId>
+            <artifactId>Heroes-API</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 
 </project>
