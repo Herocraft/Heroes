@@ -2,14 +2,17 @@ package com.herocraftonline.heroes.characters;
 
 import com.herocraftonline.heroes.components.Component;
 import com.herocraftonline.heroes.effects.Effect;
+import org.spongepowered.api.entity.player.Player;
+import org.spongepowered.api.world.Location;
 
 import java.util.Collection;
+import java.util.UUID;
 
 /**
  * <p>Represents a character, which is Heroes' representation of any entities that can have effects
  * applied to them, or have components attached to them</p>
- * <p>To obtain a Character instance, use {@link CharacterManager#getCharacter(java.util.UUID)},
- * {@link CharacterManager#getCharacter(org.spongepowered.api.entity.living.Living)}
+ * <p>To obtain a Character instance, use {@link com.herocraftonline.heroes.characters.managers.CharacterManager#getCharacter(java.util.UUID)},
+ * {@link com.herocraftonline.heroes.characters.managers.CharacterManager#getCharacter(org.spongepowered.api.entity.living.Living)}
  * or an appropriate alternate method depending on entity type.</p>
  * <p>It is important to note that characters are not restricted to living entities - for instance the Beacon
  * character class in the com.herocraftonline.heroes:Heroes-Common maven module is designed for use with static
@@ -18,11 +21,25 @@ import java.util.Collection;
 public interface HCharacter {
 
     /**
-     * @return Retrieves the name of the character: the player name if the character is a player,
-     * otherwise the set custom name of a non-player, or the name of the entity type if said
+     * Gets the location of the character
+     * @return A copy of the location of the character
+     */
+    Location getLocation();
+
+    /**
+     * @return Retrieves the name of the character: examples include the player name if the character is a player,
+     * otherwise the set custom name of a living non-player, or the name of the entity type if said
      * custom name does not exist
      */
     String getName();
+
+    /**
+     * All characters must be convertible to some constant UID - that is to say so long as the objects they are
+     * representing remain the same, the converted UUID should also be the same. Ideally, the UID should also match
+     * that of the underlying object if it exists (e.g. from {@link Player#getUniqueId()} for Hero objects).
+     * @return The UID of the character
+     */
+    UUID getUID();
 
     // Effect Methods
 
@@ -75,15 +92,17 @@ public interface HCharacter {
     public Component getComponent(String name);
 
     /**
-     * Adds a component to this Hero, and calls {@link Component#onAttach(HCharacter)} with this Hero as the parameter
+     * Adds a component to this Character, and calls {@link Component#onAttach(HCharacter)} with this character as the
+     * parameter
      * @param component The component to register
      * @return False if an error occurs during attach, true otherwise
      */
     public boolean registerComponent(Component component);
 
     /**
-     * Removes a component from this Hero, and calls {@link Component#onRemove(HCharacter)} with this Hero as the parameter
-     * @param name he name of the component, corresponding to value of {@link Component#getName()}, case sensitive
+     * Removes a component from this Character, and calls {@link Component#onRemove(HCharacter)} with this Character as
+     * the parameter
+     * @param name The name of the component, corresponding to value of {@link Component#getName()}, case sensitive
      * @return The removed component, or null no matching component exists
      */
     public Component unregisterComponent(String name);

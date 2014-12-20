@@ -1,5 +1,9 @@
-package com.herocraftonline.heroes.characters;
+package com.herocraftonline.heroes.characters.managers;
 
+import com.herocraftonline.heroes.characters.Creature;
+import com.herocraftonline.heroes.characters.HCharacter;
+import com.herocraftonline.heroes.characters.Hero;
+import com.herocraftonline.heroes.characters.Inanimate;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.living.Living;
 import org.spongepowered.api.entity.player.Player;
@@ -8,7 +12,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 /**
- * Responsible for loading, managing, retrieving, and saving {@link HCharacter} instances
+ * Responsible for loading, managing, retrieving, and saving {@link com.herocraftonline.heroes.characters.HCharacter} instances
  */
 public interface CharacterManager {
 
