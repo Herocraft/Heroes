@@ -1,9 +1,13 @@
 package com.herocraftonline.heroes.characters;
 
+import org.spongepowered.api.entity.player.Player;
+
 public interface Hero extends CharacterBase {
+
     /**
-     * @return The name of the Hero, typically matches the name of the underlying Player object
+     * Functionally the same as {@link #getEntity()} without up-casting
+     * @return The player represented by this Hero object.
      */
-    public String getName();
+    public Player getPlayer();
 
 }

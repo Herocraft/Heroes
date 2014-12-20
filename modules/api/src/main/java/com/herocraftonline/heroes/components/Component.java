@@ -16,7 +16,7 @@ import com.herocraftonline.heroes.characters.Hero;
  */
 public interface Component {
     /**
-     * The name of the component - it is with this name that the component is registered with a Hero
+     * The name of the component - it is with this name that the component is registered with a Character
      * @return An (ideally) unique name for this component
      */
     String getName();
