@@ -1,7 +1,7 @@
 package com.herocraftonline.heroes.characters.managers;
 
+import com.herocraftonline.heroes.characters.CharacterBase;
 import com.herocraftonline.heroes.characters.Creature;
-import com.herocraftonline.heroes.characters.HCharacter;
 import com.herocraftonline.heroes.characters.Hero;
 import com.herocraftonline.heroes.characters.Inanimate;
 import org.spongepowered.api.entity.Entity;
@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 /**
- * Responsible for loading, managing, retrieving, and saving {@link com.herocraftonline.heroes.characters.HCharacter} instances
+ * Responsible for loading, managing, retrieving, and saving {@link com.herocraftonline.heroes.characters.CharacterBase} instances
  */
 public interface CharacterManager {
 
@@ -23,7 +23,7 @@ public interface CharacterManager {
      * @return Depending on nature of the character, the return value is equal to the return value of getHero(UUID) or
      * getCreature(UUID)
      */
-    HCharacter getCharacter(UUID character);
+    CharacterBase getCharacter(UUID character);
 
     /**
      * General method to get a character by its entity object. Use
@@ -34,7 +34,7 @@ public interface CharacterManager {
      * @return Depending on the nature of the character, the return value is equal to the return value of
      * getHero(Player), getCreature(Living) or getNonLiving(Entity)
      */
-    HCharacter getCharacter(Living character);
+    CharacterBase getCharacter(Living character);
 
     /**
      * Gets a given Creature (non-human living character) from its UUID

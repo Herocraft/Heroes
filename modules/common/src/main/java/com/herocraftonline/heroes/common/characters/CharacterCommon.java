@@ -1,7 +1,7 @@
 package com.herocraftonline.heroes.common.characters;
 
 import com.herocraftonline.heroes.Heroes;
-import com.herocraftonline.heroes.characters.HCharacter;
+import com.herocraftonline.heroes.characters.CharacterBase;
 import com.herocraftonline.heroes.components.Component;
 import com.herocraftonline.heroes.effects.Effect;
 
@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 
-public abstract class CharacterCommon implements HCharacter {
+public abstract class CharacterCommon implements CharacterBase {
     private final Map<String, Component> components;
     private final Map<String, Effect> effects;
 

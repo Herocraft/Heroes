@@ -17,7 +17,7 @@ public interface HeroesPlugin {
 
     /**
      * <p>Gets the active {@link CharacterManager}, which is responsible for loading, managing, retrieving, and saving
-     * {@link com.herocraftonline.heroes.characters.HCharacter} instances</p>
+     * {@link com.herocraftonline.heroes.characters.CharacterBase} instances</p>
      */
     CharacterManager getCharacterManager();
 

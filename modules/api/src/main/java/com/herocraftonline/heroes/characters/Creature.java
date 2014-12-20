@@ -1,5 +1,5 @@
 package com.herocraftonline.heroes.characters;
 
 //TODO
-public interface Creature extends HCharacter {
+public interface Creature extends CharacterBase {
 }

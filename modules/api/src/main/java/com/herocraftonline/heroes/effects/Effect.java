@@ -1,6 +1,6 @@
 package com.herocraftonline.heroes.effects;
 
-import com.herocraftonline.heroes.characters.HCharacter;
+import com.herocraftonline.heroes.characters.CharacterBase;
 
 /**
  * <p>Represents additional information that can be attached to Character objects. Unlike components, effects are not
@@ -15,7 +15,7 @@ public interface Effect {
      * <p>Called when an effect is applied (added) to a Character</p>
      * @param character The character to which the effect is being applied
      */
-    void apply(HCharacter character);
+    void apply(CharacterBase character);
 
     /**
      * @return An ideally unique string identifier (human readable) for this effect

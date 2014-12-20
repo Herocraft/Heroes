@@ -18,7 +18,7 @@ import java.util.UUID;
  * character class in the com.herocraftonline.heroes:Heroes-Common maven module is designed for use with static
  * entities and/or that are immobile/persistent at a certain point in the map(</p>
  */
-public interface HCharacter {
+public interface CharacterBase {
 
     /**
      * Gets the location of the character
@@ -44,7 +44,7 @@ public interface HCharacter {
     // Effect Methods
 
     /**
-     * Adds the given effect to the Character, initiating its first tick and calling {@link Effect#apply(HCharacter)},
+     * Adds the given effect to the Character, initiating its first tick and calling {@link Effect#apply(CharacterBase)},
      * @param effect The effect to add, will replace any preexisting effects of the same name
      */
     void addEffect(Effect effect);
@@ -92,7 +92,7 @@ public interface HCharacter {
     public Component getComponent(String name);
 
     /**
-     * Adds a component to this Character, and calls {@link Component#onAttach(HCharacter)} with this character as the
+     * Adds a component to this Character, and calls {@link Component#onAttach(CharacterBase)} with this character as the
      * parameter
      * @param component The component to register
      * @return False if an error occurs during attach, true otherwise
@@ -100,7 +100,7 @@ public interface HCharacter {
     public boolean registerComponent(Component component);
 
     /**
-     * Removes a component from this Character, and calls {@link Component#onRemove(HCharacter)} with this Character as
+     * Removes a component from this Character, and calls {@link Component#onRemove(CharacterBase)} with this Character as
      * the parameter
      * @param name The name of the component, corresponding to value of {@link Component#getName()}, case sensitive
      * @return The removed component, or null no matching component exists

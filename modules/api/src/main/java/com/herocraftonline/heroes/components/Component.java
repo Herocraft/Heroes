@@ -1,6 +1,6 @@
 package com.herocraftonline.heroes.components;
 
-import com.herocraftonline.heroes.characters.HCharacter;
+import com.herocraftonline.heroes.characters.CharacterBase;
 import com.herocraftonline.heroes.characters.Hero;
 
 /**
@@ -25,17 +25,17 @@ public interface Component {
      * Actions to take when a component is attached to a given Character - this can be done when a Character
      * is initially loaded from storage (in which the component is already registered with the Character)
      * or when a component is initially registered with a Character via
-     * {@link com.herocraftonline.heroes.characters.HCharacter#registerComponent(Component)}.
+     * {@link com.herocraftonline.heroes.characters.CharacterBase#registerComponent(Component)}.
      * @param character The Character to which the component is registered
      */
-    void onAttach(HCharacter character);
+    void onAttach(CharacterBase character);
 
     /**
      * Actions to take when a component is unregistered from the Character. Note that storage providers should
      * automatically remove configuration keys associated with this component if it has been unregistered
      * @param character The Character from which the component is being registered
      */
-    void onRemove(HCharacter character);
+    void onRemove(CharacterBase character);
 
     /**
      * Actions to take when a component is saved. The guarantee is made that the given character has the component
