@@ -1,6 +1,7 @@
 package com.herocraftonline.heroes.io;
 
 import com.google.common.base.Function;
+import com.herocraftonline.heroes.characters.CharacterBase;
 import com.herocraftonline.heroes.characters.Creature;
 import com.herocraftonline.heroes.characters.Hero;
 import com.herocraftonline.heroes.characters.Inanimate;
@@ -11,7 +12,9 @@ import java.util.UUID;
 
 /**
  * Implementations of this interface handle various IO functions (namely loading and saving {@link Hero} objects
- * and related settings).
+ * and related settings). Saves and record retrieval should be done via UID: that is to say there is a guarantee that
+ * {@link com.herocraftonline.heroes.characters.CharacterBase#getUID()} will not be null and will remain consistent
+ * in representations of the same object.
  */
 public interface StorageProvider {
     /**
@@ -136,22 +139,22 @@ public interface StorageProvider {
 
     /**
      * Removes a given {@link Creature} from storage
-     * @param creature The creature to remove
+     * @param record The UUID of the record to remove
      * @return The removed creature, or null if none removed
      */
-    Creature removeCreature(Creature creature);
+    Creature removeCreature(UUID record);
 
     /**
      * Removes a given Hero from storage
-     * @param hero The hero to remove
+     * @param record The record of the UID to remove
      * @return The removed Hero, or null if none removed
      */
-    Hero removeHero(Hero hero);
+    Hero removeHero(UUID record);
 
     /**
      * Removes a given Inanimate from storage
-     * @param inanimate the Inanimate to remove
+     * @param record The UUID of the record to remove
      * @return the removed Inanimate, or null if none removed
      */
-    Inanimate removeInanimate(Inanimate inanimate);
+    Inanimate removeInanimate(UUID record);
 }

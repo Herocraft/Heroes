@@ -2,6 +2,7 @@ package com.herocraftonline.heroes.characters;
 
 import com.herocraftonline.heroes.components.Component;
 import com.herocraftonline.heroes.effects.Effect;
+import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.world.Location;
 
@@ -16,9 +17,16 @@ import java.util.UUID;
  * or an appropriate alternate method depending on entity type.</p>
  * <p>It is important to note that characters are not restricted to living entities - for instance the Beacon
  * character class in the com.herocraftonline.heroes:Heroes-Common maven module is designed for use with static
- * entities and/or that are immobile/persistent at a certain point in the map(</p>
+ * entities and/or blocks that are immobile/persistent at a certain point in the map(</p>
  */
 public interface CharacterBase {
+
+    /**
+     * Gets the Entity represented by this character - might not always be present (for instance if this Character represents a
+     * block
+     * @return The entity that is represented by this character
+     */
+    Entity getEntity();
 
     /**
      * Gets the location of the character
@@ -34,9 +42,14 @@ public interface CharacterBase {
     String getName();
 
     /**
-     * All characters must be convertible to some constant UID - that is to say so long as the objects they are
+     * <p>All characters must be convertible to some constant UID - that is to say so long as the objects they are
      * representing remain the same, the converted UUID should also be the same. Ideally, the UID should also match
-     * that of the underlying object if it exists (e.g. from {@link Player#getUniqueId()} for Hero objects).
+     * that of the underlying object if it exists (e.g. from {@link Player#getUniqueId()} for Hero objects).</p>
+     *
+     * <p>The guarantee is made that this method will return a non-null value, and that provided the underlying
+     * object being represented remains the same as determined by the character implementation, the UUID returned from
+     * this method will also remain consistent.</p>
+     *
      * @return The UID of the character
      */
     UUID getUID();
