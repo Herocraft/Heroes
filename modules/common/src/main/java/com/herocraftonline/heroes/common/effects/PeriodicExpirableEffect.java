@@ -1,47 +1,24 @@
 package com.herocraftonline.heroes.common.effects;
 
-import com.google.common.base.Optional;
 import com.herocraftonline.heroes.characters.CharacterBase;
 import com.herocraftonline.heroes.effects.EffectPeriodic;
 import com.herocraftonline.heroes.plugin.HeroesPlugin;
-import org.spongepowered.api.service.scheduler.RepeatingTask;
-import org.spongepowered.api.service.scheduler.Task;
-
-import java.util.UUID;
 
 public abstract class PeriodicExpirableEffect extends ExpirableEffect implements EffectPeriodic {
 
-    protected long period;
-    protected UUID tickTask;
-    public PeriodicExpirableEffect(HeroesPlugin plugin, String name, long period, long duration) {
+
+    private long period;
+    private long nextTick;
+
+    public PeriodicExpirableEffect(HeroesPlugin plugin, String name, long duration, long period) {
         super(plugin, name, duration);
         this.period = period;
-        tickTask = null;
     }
 
     @Override
-    public void apply(final CharacterBase character) {
-        super.apply(character);
-        Optional<RepeatingTask> taskOptional = plugin.getGame().getScheduler().runRepeatingTask(plugin, new Runnable() {
-
-            @Override
-            public void run() {
-                tick(character);
-            }
-        }, period / 1000 * 20);
-        if (taskOptional.isPresent()) {
-            tickTask = taskOptional.get().getUniqueId();
-        }
+    public void apply(CharacterBase character) {
+        nextTick = System.currentTimeMillis();
     }
-
-    public void remove(final CharacterBase character) {
-        super.remove(character);
-        Optional<Task> taskOptional = plugin.getGame().getScheduler().getTaskById(tickTask);
-        if (taskOptional.isPresent()) {
-            taskOptional.get().cancel();
-        }
-    }
-
 
     @Override
     public long getPeriod() {
@@ -53,4 +30,17 @@ public abstract class PeriodicExpirableEffect extends ExpirableEffect implements
         return period;
     }
 
+    @Override
+    public boolean canTick(long currTime) {
+        return currTime >= nextTick;
+    }
+
+    @Override
+    public void tick(CharacterBase character) {
+        if (System.currentTimeMillis() >= expireTime) {
+            super.tick(character);
+        } else {
+            nextTick += timeTillNextTick();
+        }
+    }
 }

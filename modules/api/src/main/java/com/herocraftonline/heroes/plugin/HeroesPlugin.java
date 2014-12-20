@@ -1,7 +1,7 @@
 package com.herocraftonline.heroes.plugin;
 
 import com.herocraftonline.heroes.characters.managers.CharacterDamageManager;
-import com.herocraftonline.heroes.characters.managers.CharacterEffectManager;
+import com.herocraftonline.heroes.effects.EffectManager;
 import com.herocraftonline.heroes.characters.managers.CharacterManager;
 import com.herocraftonline.heroes.characters.party.PartyManager;
 import com.herocraftonline.heroes.classes.HeroClassManager;
@@ -37,7 +37,7 @@ public interface HeroesPlugin {
 
     CharacterDamageManager getDamageManager();
 
-    CharacterEffectManager getEffectManager();
+    EffectManager getEffectManager();
 
     String getImplementation();
 

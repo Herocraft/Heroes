@@ -2,9 +2,9 @@ package com.herocraftonline.heroes.effects;
 
 /**
  * Expirable implementations indicate that the effect is finite in nature - that is to say it will expire and be removed
- * from the character at some point
+ * from the character at some point.
  */
-public interface EffectExpirable {
+public interface EffectExpirable extends EffectTickable {
 
     /**
      * @return The total duration of the effect in milliseconds - that is to say the sum of the elapsed time since the
