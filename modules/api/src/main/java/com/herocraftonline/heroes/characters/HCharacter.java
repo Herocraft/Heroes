@@ -6,8 +6,8 @@ import com.herocraftonline.heroes.effects.Effect;
 import java.util.Collection;
 
 /**
- * <p>Represents a character, which is Heroes' representation of any entities that can cast a skill, have effects
- * applied to them, or have </p>
+ * <p>Represents a character, which is Heroes' representation of any entities that can have effects
+ * applied to them, or have components attached to them</p>
  * <p>To obtain a Character instance, use {@link CharacterManager#getCharacter(java.util.UUID)},
  * {@link CharacterManager#getCharacter(org.spongepowered.api.entity.living.Living)}
  * or an appropriate alternate method depending on entity type.</p>
@@ -15,7 +15,7 @@ import java.util.Collection;
  * character class in the com.herocraftonline.heroes:Heroes-Common maven module is designed for use with static
  * entities and/or that are immobile/persistent at a certain point in the map(</p>
  */
-public interface Character {
+public interface HCharacter {
 
     /**
      * @return Retrieves the name of the character: the player name if the character is a player,
@@ -27,7 +27,7 @@ public interface Character {
     // Effect Methods
 
     /**
-     * Adds the given effect to the Character, initiating its first tick and calling {@link Effect#apply(Character)},
+     * Adds the given effect to the Character, initiating its first tick and calling {@link Effect#apply(HCharacter)},
      * @param effect The effect to add, will replace any preexisting effects of the same name
      */
     void addEffect(Effect effect);
@@ -46,10 +46,17 @@ public interface Character {
 
     /**
      * Checks whether this character has a given Effect
-     * @param effect The effect to check for
+     * @param name The name of the effect to check for, non case-sensitive
      * @return Whether the character has the effect
      */
-    boolean hasEffect(Effect effect);
+    boolean hasEffect(String name);
+
+    /**
+     * Removes an effect from this character if it exists
+     * @param name The name of the effect to remove, non case-sensitive
+     * @return The removed effect, or null if none matching
+     */
+    Effect removeEffect(String name);
 
     // Component Methods
 
@@ -68,14 +75,14 @@ public interface Character {
     public Component getComponent(String name);
 
     /**
-     * Adds a component to this Hero, and calls {@link Component#onAttach(Character)} with this Hero as the parameter
+     * Adds a component to this Hero, and calls {@link Component#onAttach(HCharacter)} with this Hero as the parameter
      * @param component The component to register
      * @return False if an error occurs during attach, true otherwise
      */
     public boolean registerComponent(Component component);
 
     /**
-     * Removes a component from this Hero, and calls {@link Component#onRemove(Character)} with this Hero as the parameter
+     * Removes a component from this Hero, and calls {@link Component#onRemove(HCharacter)} with this Hero as the parameter
      * @param name he name of the component, corresponding to value of {@link Component#getName()}, case sensitive
      * @return The removed component, or null no matching component exists
      */

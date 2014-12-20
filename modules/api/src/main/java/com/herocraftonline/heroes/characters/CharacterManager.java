@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 /**
- * Responsible for loading, managing, retrieving, and saving {@link Character} instances
+ * Responsible for loading, managing, retrieving, and saving {@link HCharacter} instances
  */
 public interface CharacterManager {
 
@@ -19,7 +19,7 @@ public interface CharacterManager {
      * @return Depending on nature of the character, the return value is equal to the return value of getHero(UUID) or
      * getCreature(UUID)
      */
-    Character getCharacter(UUID character);
+    HCharacter getCharacter(UUID character);
 
     /**
      * General method to get a character by its entity object. Use
@@ -30,7 +30,7 @@ public interface CharacterManager {
      * @return Depending on the nature of the character, the return value is equal to the return value of
      * getHero(Player), getCreature(Living) or getNonLiving(Entity)
      */
-    Character getCharacter(Living character);
+    HCharacter getCharacter(Living character);
 
     /**
      * Gets a given Creature (non-human living character) from its UUID

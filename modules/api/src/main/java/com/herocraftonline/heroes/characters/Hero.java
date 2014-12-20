@@ -1,6 +1,6 @@
 package com.herocraftonline.heroes.characters;
 
-public interface Hero extends Character {
+public interface Hero extends HCharacter {
     /**
      * @return The name of the Hero, typically matches the name of the underlying Player object
      */
