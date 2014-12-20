@@ -6,8 +6,8 @@ import com.herocraftonline.heroes.plugin.HeroesPlugin;
 
 public class BasicEffect implements EffectBase {
 
-    private HeroesPlugin plugin;
-    private String name;
+    protected HeroesPlugin plugin;
+    protected String name;
 
     public BasicEffect(HeroesPlugin plugin, String name) {
         this.plugin = plugin;

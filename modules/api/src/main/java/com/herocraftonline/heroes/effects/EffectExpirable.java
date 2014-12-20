@@ -15,7 +15,7 @@ public interface EffectExpirable {
     /**
      * @return The current time at which the effect will expire in milliseconds
      */
-    long getExpireTimeMillis();
+    long getExpireTime();
 
     /**
      * @return The original duration of the effect when the effect was instantiated in milliseconds. Should be the same
@@ -25,14 +25,19 @@ public interface EffectExpirable {
 
     /**
      * @return The original time at which the effect would have expired in milliseconds. Should be the same as
-     *         {@link #getExpireTimeMillis()} provided {@link #setRemainingDuration(long)} is never called.
+     *         {@link #getExpireTime()} provided {@link #setRemainingDuration(long)} is never called.
      */
-    long getOriginalExpireTimeMillis();
+    long getOriginalExpireTime();
 
     /**
      * @return The remaining duration on the effect in milliseconds
      */
     long getRemainingDuration();
+
+    /**
+     * @return The time (in milliseconds) that the effect was applied
+     */
+    long getStartTime();
 
     /**
      * Sets the remaining duration, if negative terminates effect immediately

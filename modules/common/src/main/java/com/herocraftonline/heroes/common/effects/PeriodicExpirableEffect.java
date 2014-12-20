@@ -9,18 +9,19 @@ import org.spongepowered.api.service.scheduler.Task;
 
 import java.util.UUID;
 
-public abstract class PeriodicEffect extends BasicEffect implements EffectPeriodic {
+public abstract class PeriodicExpirableEffect extends ExpirableEffect implements EffectPeriodic {
 
     protected long period;
     protected UUID tickTask;
-
-    public PeriodicEffect(HeroesPlugin plugin, String name, long period) {
-        super(plugin, name);
+    public PeriodicExpirableEffect(HeroesPlugin plugin, String name, long period, long duration) {
+        super(plugin, name, duration);
         this.period = period;
+        tickTask = null;
     }
 
     @Override
-    public void apply(final CharacterBase character) { // Use a simple repeating tickTask for performance
+    public void apply(final CharacterBase character) {
+        super.apply(character);
         Optional<RepeatingTask> taskOptional = plugin.getGame().getScheduler().runRepeatingTask(plugin, new Runnable() {
 
             @Override
@@ -33,13 +34,14 @@ public abstract class PeriodicEffect extends BasicEffect implements EffectPeriod
         }
     }
 
-    @Override
     public void remove(final CharacterBase character) {
+        super.remove(character);
         Optional<Task> taskOptional = plugin.getGame().getScheduler().getTaskById(tickTask);
         if (taskOptional.isPresent()) {
             taskOptional.get().cancel();
         }
     }
+
 
     @Override
     public long getPeriod() {
@@ -50,4 +52,5 @@ public abstract class PeriodicEffect extends BasicEffect implements EffectPeriod
     public long timeTillNextTick() {
         return period;
     }
+
 }
