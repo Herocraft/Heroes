@@ -1,18 +1,16 @@
 package com.herocraftonline.heroes.components;
 
 import com.herocraftonline.heroes.characters.CharacterBase;
-import com.herocraftonline.heroes.characters.Hero;
+import com.herocraftonline.heroes.classes.CharacterClass;
 
 /**
- * Components represent persistent metadata that can be attached to a Hero object via
- * {@link Hero#registerComponent(Component)}. <br />
- * Additionally, components have the capability of loading settings/saving settings from class configurations, as well
- * as Hero files. <br />
- * <br />
- * Components must implement the following:
+ * <p>Components represent persistent metadata that can be attached to a Character object via
+ * {@link CharacterBase#registerComponent(Component)}. </p>
+ * <p>Initial component settings are designed to be loaded from a {@link CharacterClass} that is attached to a given
+ * character, while additional overriding settings/customizations are stored with the character itself in storage</p>
+ * <p>Components must implement the following:
  * {@code public static Component deserialize(org.spongepowered.api.service.persistence.data.DataView)} that deserializes
- * a Component from preexisting stored settings
- * The DataView
+ * a Component from preexisting stored settings</p>
  */
 public interface Component {
     /**
@@ -25,7 +23,7 @@ public interface Component {
      * Actions to take when a component is attached to a given Character - this can be done when a Character
      * is initially loaded from storage (in which the component is already registered with the Character)
      * or when a component is initially registered with a Character via
-     * {@link com.herocraftonline.heroes.characters.CharacterBase#registerComponent(Component)}.
+     * {@link CharacterBase#registerComponent(Component)}.
      * @param character The Character to which the component is registered
      */
     void onAttach(CharacterBase character);

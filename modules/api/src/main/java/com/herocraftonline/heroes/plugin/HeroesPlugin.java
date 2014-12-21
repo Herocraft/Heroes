@@ -1,10 +1,10 @@
 package com.herocraftonline.heroes.plugin;
 
 import com.herocraftonline.heroes.characters.managers.CharacterDamageManager;
+import com.herocraftonline.heroes.classes.CharacterClassManager;
 import com.herocraftonline.heroes.effects.EffectManager;
 import com.herocraftonline.heroes.characters.managers.CharacterManager;
 import com.herocraftonline.heroes.characters.party.PartyManager;
-import com.herocraftonline.heroes.classes.HeroClassManager;
 import com.herocraftonline.heroes.command.CommandHandler;
 import com.herocraftonline.heroes.configuration.ConfigManager;
 import com.herocraftonline.heroes.io.StorageManager;
@@ -29,7 +29,7 @@ public interface HeroesPlugin {
      */
     CharacterManager getCharacterManager();
 
-    HeroClassManager getClassManager();
+    CharacterClassManager getClassManager();
 
     CommandHandler getCommandHandler();
 

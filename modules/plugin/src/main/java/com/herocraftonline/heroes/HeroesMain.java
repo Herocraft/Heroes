@@ -3,7 +3,7 @@ package com.herocraftonline.heroes;
 import com.herocraftonline.heroes.characters.managers.CharacterDamageManager;
 import com.herocraftonline.heroes.characters.managers.CharacterManager;
 import com.herocraftonline.heroes.characters.party.PartyManager;
-import com.herocraftonline.heroes.classes.HeroClassManager;
+import com.herocraftonline.heroes.classes.CharacterClassManager;
 import com.herocraftonline.heroes.command.CommandHandler;
 import com.herocraftonline.heroes.configuration.ConfigManager;
 import com.herocraftonline.heroes.effects.EffectManagerImpl;
@@ -38,7 +38,7 @@ public class HeroesMain implements HeroesPlugin {
     }
 
     @Override
-    public HeroClassManager getClassManager() {
+    public CharacterClassManager getClassManager() {
         return null;
     }
 

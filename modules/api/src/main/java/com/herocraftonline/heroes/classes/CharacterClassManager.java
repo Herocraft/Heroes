@@ -1,5 +1,8 @@
 package com.herocraftonline.heroes.classes;
 
-public interface HeroClassManager {
+/**
+ *
+ */
+public interface CharacterClassManager {
     //TODO
 }
