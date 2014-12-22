@@ -2,6 +2,9 @@ package com.herocraftonline.heroes.classes;
 
 import com.herocraftonline.heroes.characters.CharacterBase;
 
+import java.util.Collection;
+import java.util.Set;
+
 /**
  * Represents a class - classes store component settings and will automatically apply relevant components with
  * initial settings when it is attached. In addition classes have levels and experience sources.
@@ -9,6 +12,37 @@ import com.herocraftonline.heroes.characters.CharacterBase;
  */
 public interface CharacterClass {
 
+    // Generic Methods
+
+    /**
+     * @return The name of the class, ideally unique
+     */
+    String getName();
+
+    // Class Requirement Methods
+
+    Collection<CharacterClassRequirement> getClassRequirements();
+
+    // Class Parenting Methods TODO: move this to a CharacterClassRequirement
+
+    /**
+     * Gets all possible parents for this class. Unlike {@link #getStrongParents()} and {@link #getWeakParents()},
+     * which only gets direct parents, this method will also
+     * @return A collection of all parent classes
+     */
+    Collection<CharacterClass> getAllParents();
+
+    /**
+     * @return Strong parents for this class - All of these classes must be mastered before this class can be chosen
+     *         by a character
+     */
+    Set<CharacterClass> getStrongParents();
+
+    /**
+     * @return Weak parents for this class - At least one of these classes must be mastered before this class can be
+     *         chosen by a character
+     */
+    Set<CharacterClass> getWeakParents();
 
     //Experience related methods
 
@@ -29,7 +63,7 @@ public interface CharacterClass {
     /**
      * @param character The character to get experience for
      * @return The amount of experience the character has accumulated in its current level
-     * @see #getExperience(Character)
+     * @see #getExperience(CharacterBase)
      */
     long getLevelExperience(CharacterBase character);
 
@@ -50,10 +84,10 @@ public interface CharacterClass {
     int getMaxLevel();
 
     /**
-     * @return The name of the class, ideally unique
+     * @param character The character to check
+     * @return Whether the provided character has mastered (is between 0-99% of the maximum level depending on settings)
+     *         the class
      */
-    String getName();
-
     boolean isMastered(CharacterBase character);
 
     /**
