@@ -21,6 +21,16 @@ public interface CharacterClass {
 
     // Class Requirement Methods
 
+    /**
+     * @param name The requirement to get, non case-sensitive, as denoted by the return value from
+     *             {@link CharacterClassRequirement#getName()} of the corresponding requirement
+     * @return The corresponding requirement instance attached to this class if it exists, null otherwise
+     */
+    CharacterClassRequirement getRequirement(String name);
+
+    /**
+     * @return An immutable copy of the class requirement instances associated with this character class
+     */
     Collection<CharacterClassRequirement> getClassRequirements();
 
     // Class Parenting Methods TODO: move this to a CharacterClassRequirement

@@ -1,5 +1,6 @@
 package com.herocraftonline.heroes.classes;
 
+import com.herocraftonline.heroes.characters.CharacterBase;
 import com.herocraftonline.heroes.classes.event.RequirementRegistrationEvent;
 
 /**
@@ -28,5 +29,13 @@ public interface CharacterClassRequirement {
      *         method.
      */
     //CharacterClassRequirement loadFromSettings(DataView config);
+
+    /**
+     * <p>The guarantee is made that this call is made only after all other requirements are attached to a given character
+     * class, thus allowing for cross-requirement checking</p>
+     * @param character The character to check
+     * @return True if the character satisfies this requirement, false otherwise
+     */
+    boolean satisfiesRequirement(CharacterBase character);
 
 }
