@@ -9,8 +9,13 @@ public class ComponentMana implements Component {
     private long maxMana;
 
     @Override
+    public Component getFromSettings(Object config) {
+        return null; //TODO
+    }
+
+    @Override
     public String getName() {
-        return null;
+        return "mana";
     }
 
     @Override

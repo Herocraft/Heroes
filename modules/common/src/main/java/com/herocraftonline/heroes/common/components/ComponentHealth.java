@@ -10,13 +10,15 @@ public class ComponentHealth implements Component {
     private double maxHealth;
     private double defaultHealth;
 
-    //public ComponentHealth(DataView root) {
 
-    //}
+    @Override
+    public Component getFromSettings(Object config) { //TODO
+        return null;
+    }
 
     @Override
     public String getName() {
-        return "HEROES_health";
+        return "health";
     }
 
     @Override

@@ -55,7 +55,7 @@ public interface Component {
      * @param character The Character to which the component is registered
      * @returns A {@link DataView} representation that can then be saved to the character
      */
-    //DataView onSave(Hero hero);
+    //DataView onSave(Character character);
 
 
 }
