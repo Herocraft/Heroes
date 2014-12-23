@@ -28,7 +28,8 @@ public interface Component {
     Component getFromSettings(Object config);
 
     /**
-     * The name of the component - it is with this name that the component is registered with a Character
+     * The name of the component - it is with this name that the component is registered with a Character and
+     * is how settings for this component are identified in configuration.
      * @return An (ideally) unique name for this component
      */
     String getName();
