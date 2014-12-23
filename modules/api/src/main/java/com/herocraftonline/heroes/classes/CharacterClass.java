@@ -1,14 +1,13 @@
 package com.herocraftonline.heroes.classes;
 
 import com.herocraftonline.heroes.characters.CharacterBase;
+import com.herocraftonline.heroes.components.Component;
 
 import java.util.Collection;
 import java.util.Set;
 
 /**
- * Represents a class - classes store component settings and will automatically apply relevant components with
- * initial settings when it is attached. In addition classes have levels and experience sources.
- * TODO: write better javadocs here
+ * Represents a Character Class. Character Classes fulfill several
  */
 public interface CharacterClass {
 
@@ -24,9 +23,10 @@ public interface CharacterClass {
     /**
      * @param name The requirement to get, non case-sensitive, as denoted by the return value from
      *             {@link CharacterClassRequirement#getName()} of the corresponding requirement
+     * @param <T> The corresponding requirement subclass registered with the CharacterClassManager by the given name
      * @return The corresponding requirement instance attached to this class if it exists, null otherwise
      */
-    CharacterClassRequirement getRequirement(String name);
+    <T extends CharacterClassRequirement> T getRequirement(String name);
 
     /**
      * @return An immutable copy of the class requirement instances associated with this character class
@@ -54,7 +54,7 @@ public interface CharacterClass {
      */
     Set<CharacterClass> getWeakParents();
 
-    //Experience related methods
+    // Experience related methods
 
     /**
      * @param character The character to get experience for
@@ -116,13 +116,21 @@ public interface CharacterClass {
      */
     void setLevel(CharacterBase character, int level);
 
-    //Component Methods
+    // Component Methods
 
     /**
-     * Retrieves the component classes attached to this class, as well as associated settings such that they may be
-     * instantiated
-     * @return A map of component classes and associated settings //TODO
+     * Retrieves the components attached to this class, with class level settings already instantiated.
+     * The returned components have <b>not</b> processed character level settings.
+     * @return An immutable collection of components attached to this class.
      */
-    //Map<Class<? extends Component>, DataView> getComponents();
+    Collection<Component> getComponents();
+
+    /**
+     * @param name The component to get, case-sensitive, as denoted by the return value from
+     *             {@link Component#getName()} of the corresponding component
+     * @param <T> The corresponding component subclass registered with the ComponentManager by the given name
+     * @return The corresponding component instance attached to this class if it exists, null otherwise
+     */
+    <T extends Component> T getComponent(String name);
 
 }
