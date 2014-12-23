@@ -1,4 +1,4 @@
-package com.herocraftonline.heroes.io;
+package com.herocraftonline.heroes.io.storage;
 
 import com.google.common.base.Function;
 import com.herocraftonline.heroes.characters.CharacterBase;
@@ -11,17 +11,19 @@ import org.spongepowered.api.entity.Entity;
 import java.util.UUID;
 
 /**
- * Implementations of this interface handle various IO functions (namely loading and saving {@link Hero} objects
- * and related settings). Saves and record retrieval should be done via UID: that is to say there is a guarantee that
- * {@link com.herocraftonline.heroes.characters.CharacterBase#getUID()} will not be null and will remain consistent
+ * Implementations of this interface handle various IO functions (namely loading and saving {@link CharacterBase}
+ * objects and related settings). Saves and record retrieval should be done via UID: that is to say there is a guarantee
+ * that {@link CharacterBase#getUID()} will not be null and will remain consistent
  * in representations of the same object.
  */
 public interface StorageProvider {
+
     /**
      * @return A (ideally) unique human-readable identifier that can be used to identify this particular storage
      * solution within human-readable mediums, such as within configuration settings.
      */
     String getStorageIdentifier();
+
     /**
      * Storage providers can optionally define a load hook {@link com.google.common.base.Function}. <br />
      * Load hooks are processed sequentially to determine whether a storage provider ought to be used when
@@ -71,10 +73,10 @@ public interface StorageProvider {
      * the first processed hook that is an exclusive saver will be used to save. Should multiple exclusive savers
      * exist in the above scenario, a warning will optionally be printed to the debug log
      *
-     * @return A Function<Character, Boolean> representation of a save hook which returns true when the Character
+     * @return A Function<CharacterBase, Boolean> representation of a save hook which returns true when the Character
      *         being passed in is eligable to be saved by this storage provider, or false otherwise
      */
-    Function<Character, Boolean> getSaveHook();
+    Function<CharacterBase, Boolean> getSaveHook();
 
     /**
      * @return True if this storage provider should be the only one used to save a character assuming save-hooks return

@@ -1,4 +1,4 @@
-package com.herocraftonline.heroes.io;
+package com.herocraftonline.heroes.io.storage;
 
 
 import java.util.Map;
