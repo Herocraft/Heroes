@@ -19,6 +19,16 @@ public interface Skill {
     void init(CharacterBase character);
 
     /**
+     * <p>Identifiers are used to determine what skill should be executed when {@code /skill <identifier>}
+     * is used.</p>
+     * <p>For example, a return value of {@code {"fireball","fball","fire ball"}}</p> would allow
+     * {@code /skill fireball}, {@code /skill fball}, and {@code /skill fire ball} to be used to execute this skill
+     *
+     * @return An array of all identifiers for this skill, non case-sensitive, can be multiple words
+     */
+    String[] getIdentifiers();
+
+    /**
      * @param character The character to get a description for
      * @return A description of a given skill specifically for the parameter character
      */
