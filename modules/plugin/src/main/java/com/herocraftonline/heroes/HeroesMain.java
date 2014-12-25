@@ -5,8 +5,9 @@ import com.herocraftonline.heroes.characters.managers.CharacterManager;
 import com.herocraftonline.heroes.characters.party.PartyManager;
 import com.herocraftonline.heroes.classes.CharacterClassManager;
 import com.herocraftonline.heroes.command.CommandHandler;
-import com.herocraftonline.heroes.io.configuration.ConfigManager;
+import com.herocraftonline.heroes.effects.EffectManager;
 import com.herocraftonline.heroes.effects.EffectManagerImpl;
+import com.herocraftonline.heroes.io.configuration.ConfigManager;
 import com.herocraftonline.heroes.io.storage.StorageManager;
 import com.herocraftonline.heroes.plugin.HeroesPlugin;
 import com.herocraftonline.heroes.skills.SkillConfigManager;
@@ -22,11 +23,14 @@ import java.util.logging.Logger;
 public class HeroesMain implements HeroesPlugin {
 
     private Game game;
+    private EffectManager effectManager;
 
     @Subscribe
     public void onServerInit(PreInitializationEvent event) {
         game = event.getGame();
+        this.effectManager = new EffectManagerImpl(this);
     }
+
     @Override
     public Game getGame() {
         return game;
@@ -58,7 +62,7 @@ public class HeroesMain implements HeroesPlugin {
     }
 
     @Override
-    public EffectManagerImpl getEffectManager() {
+    public EffectManager getEffectManager() {
         return null;
     }
 
@@ -89,6 +93,6 @@ public class HeroesMain implements HeroesPlugin {
 
     @Override
     public Logger getLogger() {
-        return null;
+        return Logger.getLogger("Minecraft"); //TODO
     }
 }
