@@ -3,6 +3,7 @@ package com.herocraftonline.heroes.skills;
 import com.herocraftonline.heroes.command.Command;
 import com.herocraftonline.heroes.plugin.HeroesPlugin;
 import org.spongepowered.api.entity.living.Living;
+import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.util.command.CommandSource;
 
 import java.util.Arrays;
@@ -20,23 +21,13 @@ public class SkillManagerImpl implements SkillManager, Command {
 
     @Override
     public boolean execute(CommandSource source, String[] args) {
+        if (!(source instanceof Player)) {
+            //TODO Player execution only
+        }
         if (args == null || args.length == 0) {
             //TODO messaging send must have skill argument or use /skills
             return true;
         }
-        Skill skill = findSkillFromArgs(args);
-        if (skill == null) {
-            //TODO messaging send no skill found
-            return true;
-        } else {
-            skill.execute(plugin.getCharacterManager().getCharacter((Living)source),
-                    Arrays.copyOfRange(args, 1, args.length));
-            return true;
-        }
-
-    }
-
-    private Skill findSkillFromArgs(String[] args) {
         // Match greatest length identifiers first
         for (int identifierLength = args.length; identifierLength >= 0; identifierLength--) {
             final StringBuilder identBuilder = new StringBuilder();
@@ -51,14 +42,18 @@ public class SkillManagerImpl implements SkillManager, Command {
             if (skill == null) {
                 continue;
             }
-            return skill;
+            // Remaining Arguments
+            String[] skillArgs = Arrays.copyOfRange(args, identifierLength, args.length);
+            skill.execute(plugin.getCharacterManager().getCharacter((Living)source), skillArgs);
+            return true;
         }
-        return null;
+        //TODO messaging send no skill found
+        return false;
     }
 
     @Override
     public String getHelp() {
-        return "Use /skills to view available skills";
+        return "View available skills with /skills";
     }
 
     @Override
