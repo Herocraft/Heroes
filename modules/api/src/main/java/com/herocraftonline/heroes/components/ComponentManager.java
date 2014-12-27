@@ -8,8 +8,10 @@ import org.spongepowered.api.GameState;
 public interface ComponentManager {
     /**
      * Registers the component with this component manager, must be called during {@link GameState#INITIALIZATION}
+     * Registration is required for a component to be attached/identifiable if said registration is not located
+     * within a JAR file inside the component data folder as defined in the configuration
      * @param component The component to register
-     * @throws java.lang.IllegalStateException if this method is called during any other GameState than INITIALIZAION
+     * @throws java.lang.IllegalStateException if this method is called during any other GameState than INITIALIZATION
      */
     void registerComponent(Component component);
 
@@ -26,7 +28,7 @@ public interface ComponentManager {
      * @param name The name of the component, non case-sensitive
      * @param <T> The specific class of the component being removed
      * @return The removed component, or null if no component found
-     * @throws java.lang.IllegalStateException if this method is called during any other GameState than INITIALIZAION
+     * @throws java.lang.IllegalStateException if this method is called during any other GameState than INITIALIZATION
      */
     <T extends Component> T removeComponent(String name);
 }
