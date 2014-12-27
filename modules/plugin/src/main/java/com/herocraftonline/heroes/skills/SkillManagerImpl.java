@@ -6,17 +6,22 @@ import org.spongepowered.api.entity.living.Living;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.util.command.CommandSource;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class SkillManagerImpl implements SkillManager, Command {
 
     private HeroesPlugin plugin;
-    protected HashMap<String, Skill> identifiers;
+    protected HashMap<String, Skill> skillsByName;
+    protected HashMap<String, Skill> skillsByIdentifiers;
 
     public SkillManagerImpl(HeroesPlugin plugin) {
         this.plugin = plugin;
-        this.identifiers = new HashMap<String, Skill>();
+        this.skillsByIdentifiers = new HashMap<String, Skill>();
+        this.skillsByName = new HashMap<String, Skill>();
     }
 
     @Override
@@ -38,7 +43,7 @@ public class SkillManagerImpl implements SkillManager, Command {
                 identBuilder.append(args[identIterator]);
             }
             final String ident = identBuilder.toString().toLowerCase();
-            Skill skill = this.identifiers.get(ident);
+            Skill skill = this.skillsByIdentifiers.get(ident);
             if (skill == null) {
                 continue;
             }
@@ -48,7 +53,7 @@ public class SkillManagerImpl implements SkillManager, Command {
             return true;
         }
         //TODO messaging send no skill found
-        return false;
+        return true;
     }
 
     @Override
@@ -63,7 +68,7 @@ public class SkillManagerImpl implements SkillManager, Command {
 
     @Override
     public int getMinArguments() {
-        return 0;
+        return 1; // /skill skillname
     }
 
     @Override
@@ -74,5 +79,31 @@ public class SkillManagerImpl implements SkillManager, Command {
     @Override
     public boolean showInHelp() {
         return false;
+    }
+
+    @Override
+    public void addSkill(Skill skill) {
+        this.skillsByName.put(skill.getName().toLowerCase(), skill);
+        for (String ident : skill.getIdentifiers()) {
+            this.skillsByIdentifiers.put(ident.toLowerCase(), skill);
+        }
+    }
+
+    @Override
+    public Collection<Skill> getSkills() {
+        return Collections.unmodifiableCollection(skillsByName.values());
+    }
+
+    @Override
+    public Skill removeSkill(String name) {
+        Skill match = skillsByName.remove(name.toLowerCase());
+        if (match != null) {
+            for (String ident : new ArrayList<String>(skillsByIdentifiers.keySet())) {
+                if (skillsByIdentifiers.get(ident).equals(match)) {
+                    skillsByIdentifiers.remove(ident);
+                }
+            }
+        }
+        return match;
     }
 }
