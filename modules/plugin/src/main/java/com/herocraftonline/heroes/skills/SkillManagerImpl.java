@@ -15,6 +15,8 @@ import java.util.HashMap;
 public class SkillManagerImpl implements SkillManager, Command {
 
     private HeroesPlugin plugin;
+    private boolean registrationLock;
+
     protected HashMap<String, Skill> skillsByName;
     protected HashMap<String, Skill> skillsByIdentifiers;
 
@@ -22,6 +24,19 @@ public class SkillManagerImpl implements SkillManager, Command {
         this.plugin = plugin;
         this.skillsByIdentifiers = new HashMap<String, Skill>();
         this.skillsByName = new HashMap<String, Skill>();
+        this.registrationLock = false;
+    }
+
+    public void init() { // During server initialization
+        loadSkills();
+    }
+
+    public void postInit() { // Post server initialization
+        this.registrationLock = true;
+    }
+
+    private void loadSkills() {
+        //TODO
     }
 
     @Override
@@ -83,6 +98,9 @@ public class SkillManagerImpl implements SkillManager, Command {
 
     @Override
     public void addSkill(Skill skill) {
+        if (registrationLock) {
+            throw new IllegalStateException("Skill registration must be done during server initialization state");
+        }
         this.skillsByName.put(skill.getName().toLowerCase(), skill);
         for (String ident : skill.getIdentifiers()) {
             this.skillsByIdentifiers.put(ident.toLowerCase(), skill);

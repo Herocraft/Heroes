@@ -1,12 +1,13 @@
 package com.herocraftonline.heroes.components;
 
 import com.herocraftonline.heroes.characters.CharacterBase;
+import org.spongepowered.api.GameState;
 
 /**
  * <p>Components represent persistent metadata that can be attached to a Characters, generally through the usage of
- * character classes. Empty component instances are generally first registered with the component manager when
- * {@link com.herocraftonline.heroes.components.event.ComponentRegistrationEvent} is called. Heroes will then call
- * {@link #getFromSettings(Object)} to create an appropriate instance for the character in question</p>
+ * character classes. Empty component instances are generally first registered with the component manager during
+ * {@link GameState#INITIALIZATION}. Heroes will then call {@link #getFromSettings(Object)} to create an appropriate
+ * instance for the character in question</p>
  * //TODO update javadocs, pending persistence API
  */
 public interface Component {

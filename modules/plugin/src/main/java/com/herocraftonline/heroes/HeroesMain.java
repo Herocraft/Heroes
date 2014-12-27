@@ -12,7 +12,10 @@ import com.herocraftonline.heroes.io.storage.StorageManager;
 import com.herocraftonline.heroes.plugin.HeroesPlugin;
 import com.herocraftonline.heroes.skills.SkillConfigManager;
 import com.herocraftonline.heroes.skills.SkillManager;
+import com.herocraftonline.heroes.skills.SkillManagerImpl;
 import org.spongepowered.api.Game;
+import org.spongepowered.api.event.state.InitializationEvent;
+import org.spongepowered.api.event.state.PostInitializationEvent;
 import org.spongepowered.api.event.state.PreInitializationEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.util.event.Subscribe;
@@ -24,12 +27,25 @@ public class HeroesMain implements HeroesPlugin {
 
     private Game game;
     private EffectManager effectManager;
+    private SkillManagerImpl skillManager;
 
     @Subscribe
-    public void onServerInit(PreInitializationEvent event) {
+    public void onPreInit(PreInitializationEvent event) {
         game = event.getGame();
-        this.effectManager = new EffectManagerImpl(this);
+        effectManager = new EffectManagerImpl(this);
+        skillManager = new SkillManagerImpl(this);
     }
+
+    @Subscribe
+    public void onInit(InitializationEvent event) {
+        skillManager.init();
+    }
+
+    @Subscribe
+    public void onPostInit(PostInitializationEvent event) {
+        skillManager.postInit();
+    }
+
 
     @Override
     public Game getGame() {

@@ -1,14 +1,15 @@
 package com.herocraftonline.heroes.classes;
 
 import com.herocraftonline.heroes.characters.CharacterBase;
-import com.herocraftonline.heroes.classes.event.RequirementRegistrationEvent;
+import com.herocraftonline.heroes.plugin.HeroesPlugin;
+import org.spongepowered.api.GameState;
 
 /**
  * <p>Implementations are identified by name and represent a condition check that must be met by a character prior to
  * being allowed to use a class.</p>
  *
- * <p>Requirements instances must be registered during {@link RequirementRegistrationEvent} by calling
- * {@link RequirementRegistrationEvent#getClassManager()#registerClassRequirement(CharacterClassRequirement)}</p>
+ * <p>Requirements instances must be registered during {@link GameState#INITIALIZATION} by calling
+ * {@link HeroesPlugin#getClassManager()#registerClassRequirement(CharacterClassRequirement)}</p>
  *
  * <p>The requirements required (as well as any relevant settings) for a class are defined in the class configuration
  * by the end user. </p>
