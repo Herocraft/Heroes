@@ -10,10 +10,12 @@ public interface ComponentManager {
      * Registers the component with this component manager, must be called during {@link GameState#INITIALIZATION}
      * Registration is required for a component to be attached/identifiable if said registration is not located
      * within a JAR file inside the component data folder as defined in the configuration
-     * @param component The component to register
+     * @param component The class of the component to register
      * @throws java.lang.IllegalStateException if this method is called during any other GameState than INITIALIZATION
+     * @throws java.lang.IllegalArgumentException if the parameter class fails instantiation tests or does not meet
+     *         other requirements
      */
-    void registerComponent(Component component);
+    void registerComponent(Class<? extends Component> component);
 
     /**
      * Gets a base component instance with no data values passed in

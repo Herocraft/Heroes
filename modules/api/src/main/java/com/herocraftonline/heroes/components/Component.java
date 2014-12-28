@@ -1,6 +1,7 @@
 package com.herocraftonline.heroes.components;
 
 import com.herocraftonline.heroes.characters.CharacterBase;
+import com.herocraftonline.heroes.plugin.HeroesPlugin;
 import org.spongepowered.api.GameState;
 
 /**
@@ -8,6 +9,11 @@ import org.spongepowered.api.GameState;
  * character classes. Empty component instances are generally first registered with the component manager during
  * {@link GameState#INITIALIZATION}. Heroes will then call {@link #getFromSettings(Object)} to create an appropriate
  * instance for the character in question</p>
+ *
+ * <p>Component implementations should not use constructors with arguments/parameters - the Heroes plugin will generally
+ * use reflection to initialize the component class with an empty constructor. Rather additional data can be passed in
+ * at two points: {@link #onInit(HeroesPlugin)} for general/shared values, or {@link #getFromSettings(Object)} for
+ * instance specific values.</p>
  * //TODO update javadocs, pending persistence API
  */
 public interface Component {
@@ -34,6 +40,12 @@ public interface Component {
      * @return An (ideally) unique name for this component
      */
     String getName();
+
+    /**
+     * Serves as an alternative to the constructor, called when
+     * @param plugin
+     */
+    void onInit(HeroesPlugin plugin);
 
     /**
      * Actions to take when a component is attached to a given Character - this can be done when a Character

@@ -10,10 +10,12 @@ public interface CharacterClassManager {
      * Registers a class requirement with the class manager, must be done during {@link GameState#INITIALIZATION}.
      * Registration is required for a requirement to be attached to a class if said registration is not located
      * within a JAR file inside the requirement data folder as defined in the configuration
-     * @param requirement The requirement to register
+     * @param requirement The class of the  requirement to register
      * @throws java.lang.IllegalStateException if registration is done at any other state than INITIALIZATION
+     * @throws java.lang.IllegalArgumentException if the parameter class fails instantiation tests or does not meet
+     *         other requirements
      */
-    void registerRequirement(CharacterClassRequirement requirement);
+    void registerRequirement(Class<? extends CharacterClassRequirement> requirement);
 
     /**
      * Gets a base requirement instance with no data values passed in
