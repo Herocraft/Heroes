@@ -1,9 +1,9 @@
 package com.herocraftonline.heroes.common.characters;
 
 import com.herocraftonline.heroes.Heroes;
-import com.herocraftonline.heroes.characters.CharacterBase;
-import com.herocraftonline.heroes.components.Component;
-import com.herocraftonline.heroes.effects.EffectBase;
+import com.herocraftonline.heroes.api.characters.CharacterBase;
+import com.herocraftonline.heroes.api.components.Component;
+import com.herocraftonline.heroes.api.effects.EffectBase;
 
 import java.util.Collection;
 import java.util.Collections;

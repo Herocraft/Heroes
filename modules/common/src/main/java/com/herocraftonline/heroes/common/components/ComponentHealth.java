@@ -1,7 +1,8 @@
 package com.herocraftonline.heroes.common.components;
 
-import com.herocraftonline.heroes.characters.CharacterBase;
-import com.herocraftonline.heroes.components.Component;
+import com.herocraftonline.heroes.api.characters.CharacterBase;
+import com.herocraftonline.heroes.api.components.Component;
+import com.herocraftonline.heroes.api.plugin.HeroesPlugin;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.living.Living;
 
@@ -19,6 +20,11 @@ public class ComponentHealth implements Component {
     @Override
     public String getName() {
         return "health";
+    }
+
+    @Override
+    public void onInit(HeroesPlugin plugin) {
+
     }
 
     @Override

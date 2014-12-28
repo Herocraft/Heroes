@@ -1,8 +1,8 @@
 package com.herocraftonline.heroes.common.effects;
 
-import com.herocraftonline.heroes.characters.CharacterBase;
-import com.herocraftonline.heroes.effects.EffectBase;
-import com.herocraftonline.heroes.plugin.HeroesPlugin;
+import com.herocraftonline.heroes.api.characters.CharacterBase;
+import com.herocraftonline.heroes.api.effects.EffectBase;
+import com.herocraftonline.heroes.api.plugin.HeroesPlugin;
 
 public class BasicEffect implements EffectBase {
 

@@ -1,7 +1,9 @@
 package com.herocraftonline.heroes.effects;
 
 import com.google.common.base.Optional;
-import com.herocraftonline.heroes.plugin.HeroesPlugin;
+import com.herocraftonline.heroes.api.effects.EffectManager;
+import com.herocraftonline.heroes.api.effects.EffectTickable;
+import com.herocraftonline.heroes.api.plugin.HeroesPlugin;
 import org.spongepowered.api.service.scheduler.RepeatingTask;
 
 import java.util.HashSet;

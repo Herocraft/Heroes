@@ -1,7 +1,7 @@
 package com.herocraftonline.heroes.common.skills;
 
-import com.herocraftonline.heroes.plugin.HeroesPlugin;
-import com.herocraftonline.heroes.skills.Skill;
+import com.herocraftonline.heroes.api.plugin.HeroesPlugin;
+import com.herocraftonline.heroes.api.skills.Skill;
 
 public abstract class BaseSkill implements Skill {
 

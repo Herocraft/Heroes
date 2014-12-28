@@ -1,7 +1,9 @@
 package com.herocraftonline.heroes.skills;
 
-import com.herocraftonline.heroes.command.Command;
-import com.herocraftonline.heroes.plugin.HeroesPlugin;
+import com.herocraftonline.heroes.api.command.Command;
+import com.herocraftonline.heroes.api.plugin.HeroesPlugin;
+import com.herocraftonline.heroes.api.skills.Skill;
+import com.herocraftonline.heroes.api.skills.SkillManager;
 import org.spongepowered.api.entity.living.Living;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.util.command.CommandSource;

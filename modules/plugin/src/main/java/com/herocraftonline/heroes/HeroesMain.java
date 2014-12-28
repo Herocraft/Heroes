@@ -1,17 +1,18 @@
 package com.herocraftonline.heroes;
 
-import com.herocraftonline.heroes.characters.managers.CharacterDamageManager;
-import com.herocraftonline.heroes.characters.managers.CharacterManager;
-import com.herocraftonline.heroes.characters.party.PartyManager;
-import com.herocraftonline.heroes.classes.CharacterClassManager;
-import com.herocraftonline.heroes.command.CommandHandler;
-import com.herocraftonline.heroes.effects.EffectManager;
+import com.herocraftonline.heroes.api.characters.managers.CharacterDamageManager;
+import com.herocraftonline.heroes.api.characters.managers.CharacterManager;
+import com.herocraftonline.heroes.api.characters.party.PartyManager;
+import com.herocraftonline.heroes.api.classes.CharacterClassManager;
+import com.herocraftonline.heroes.api.command.CommandHandler;
+import com.herocraftonline.heroes.api.effects.EffectManager;
+import com.herocraftonline.heroes.api.io.configuration.ConfigManager;
+import com.herocraftonline.heroes.api.io.storage.StorageManager;
+import com.herocraftonline.heroes.api.plugin.HeroesPlugin;
+import com.herocraftonline.heroes.api.skills.SkillConfigManager;
+import com.herocraftonline.heroes.api.skills.SkillManager;
+import com.herocraftonline.heroes.component.ComponentManagerImpl;
 import com.herocraftonline.heroes.effects.EffectManagerImpl;
-import com.herocraftonline.heroes.io.configuration.ConfigManager;
-import com.herocraftonline.heroes.io.storage.StorageManager;
-import com.herocraftonline.heroes.plugin.HeroesPlugin;
-import com.herocraftonline.heroes.skills.SkillConfigManager;
-import com.herocraftonline.heroes.skills.SkillManager;
 import com.herocraftonline.heroes.skills.SkillManagerImpl;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.event.state.InitializationEvent;
@@ -28,12 +29,14 @@ public class HeroesMain implements HeroesPlugin {
     private Game game;
     private EffectManager effectManager;
     private SkillManagerImpl skillManager;
+    private ComponentManagerImpl componentManager;
 
     @Subscribe
     public void onPreInit(PreInitializationEvent event) {
         game = event.getGame();
         effectManager = new EffectManagerImpl(this);
         skillManager = new SkillManagerImpl(this);
+        componentManager = new ComponentManagerImpl(this);
     }
 
     @Subscribe

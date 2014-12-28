@@ -1,6 +1,6 @@
 package com.herocraftonline.heroes.common.characters.living;
 
-import com.herocraftonline.heroes.characters.Hero;
+import com.herocraftonline.heroes.api.characters.Hero;
 import com.herocraftonline.heroes.common.characters.CharacterCommon;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.player.Player;

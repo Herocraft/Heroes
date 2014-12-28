@@ -1,7 +1,8 @@
 package com.herocraftonline.heroes.common.components;
 
-import com.herocraftonline.heroes.characters.CharacterBase;
-import com.herocraftonline.heroes.components.Component;
+import com.herocraftonline.heroes.api.characters.CharacterBase;
+import com.herocraftonline.heroes.api.components.Component;
+import com.herocraftonline.heroes.api.plugin.HeroesPlugin;
 
 public class ComponentMana implements Component {
 
@@ -16,6 +17,11 @@ public class ComponentMana implements Component {
     @Override
     public String getName() {
         return "mana";
+    }
+
+    @Override
+    public void onInit(HeroesPlugin plugin) {
+
     }
 
     @Override

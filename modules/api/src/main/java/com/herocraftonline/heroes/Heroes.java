@@ -1,6 +1,6 @@
 package com.herocraftonline.heroes;
 
-import com.herocraftonline.heroes.plugin.HeroesPlugin;
+import com.herocraftonline.heroes.api.plugin.HeroesPlugin;
 
 public class Heroes {
 

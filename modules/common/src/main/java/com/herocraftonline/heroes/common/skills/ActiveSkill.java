@@ -1,8 +1,8 @@
 package com.herocraftonline.heroes.common.skills;
 
-import com.herocraftonline.heroes.characters.CharacterBase;
-import com.herocraftonline.heroes.plugin.HeroesPlugin;
-import com.herocraftonline.heroes.skills.SkillResult;
+import com.herocraftonline.heroes.api.characters.CharacterBase;
+import com.herocraftonline.heroes.api.plugin.HeroesPlugin;
+import com.herocraftonline.heroes.api.skills.SkillResult;
 
 public abstract class ActiveSkill extends BaseSkill {
 
