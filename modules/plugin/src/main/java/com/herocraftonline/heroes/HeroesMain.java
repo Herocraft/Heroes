@@ -14,6 +14,7 @@ import com.herocraftonline.heroes.api.skills.SkillManager;
 import com.herocraftonline.heroes.component.ComponentManagerImpl;
 import com.herocraftonline.heroes.effects.EffectManagerImpl;
 import com.herocraftonline.heroes.skills.SkillManagerImpl;
+import com.herocraftonline.heroes.util.LoaderUtil;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.event.state.InitializationEvent;
 import org.spongepowered.api.event.state.PostInitializationEvent;
@@ -34,6 +35,11 @@ public class HeroesMain implements HeroesPlugin {
     @Subscribe
     public void onPreInit(PreInitializationEvent event) {
         game = event.getGame();
+
+        // Initialize utility classes first
+        new LoaderUtil(this);
+
+        // Initialize Managers
         effectManager = new EffectManagerImpl(this);
         skillManager = new SkillManagerImpl(this);
         componentManager = new ComponentManagerImpl(this);

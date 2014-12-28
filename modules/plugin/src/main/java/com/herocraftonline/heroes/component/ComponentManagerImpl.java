@@ -3,18 +3,12 @@ package com.herocraftonline.heroes.component;
 import com.herocraftonline.heroes.api.components.Component;
 import com.herocraftonline.heroes.api.components.ComponentManager;
 import com.herocraftonline.heroes.api.plugin.HeroesPlugin;
+import com.herocraftonline.heroes.util.LoaderUtil;
 
 import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
+import java.util.logging.Level;
 
 public class ComponentManagerImpl implements ComponentManager {
 
@@ -37,63 +31,18 @@ public class ComponentManagerImpl implements ComponentManager {
     }
 
     private void loadComponents() {
-        URLClassLoader loader = (URLClassLoader) plugin.getClass().getClassLoader();
         File componentDir = new File("Mock File"); //TODO
         componentDir.mkdirs();
-
-        // Sanitize Inputs - Only load JARs
-        List<File> toLoad = new LinkedList<File>();
-        for (final String fileName : componentDir.list()) {
-            if (fileName.toLowerCase().endsWith(".jar")) {
-                toLoad.add(new File(componentDir, fileName));
-            }
-        }
-
-        // Load from JAR
-        for (final File file : toLoad) {
-            // Add to class loader
+        for (Class<? extends Component> clazz : LoaderUtil.instance().loadJARsFromDir(componentDir, Component.class)) {
             try {
-                addURL(file.toURI().toURL(), loader);
-            } catch (IOException e) {
-                e.printStackTrace();
-                continue;
-            }
-            // Obtain component class
-            try {
-                JarFile jar = new JarFile(file);
-                String mainClass = null;
-                final Enumeration<JarEntry> entries = jar.entries();
-                while (entries.hasMoreElements()) {
-                    final JarEntry entry = entries.nextElement();
-                    if (entry.getName().endsWith(".class")) {
-                        String clazzName = entry.getName().replace("/",".").replace("\\",".").substring(0, entry.getName().lastIndexOf("."));
-                        final Class<?> clazz = Class.forName(clazzName, true, loader);
-                        if (Component.class.isAssignableFrom(clazz)) {
-                            // This is main class - register
-                            registerComponent((Class<? extends Component>) clazz);
-                            break;
-                        }
-                    }
-                }
-            } catch (IllegalArgumentException | ClassNotFoundException | IOException e) {
-                e.printStackTrace();
+                registerComponent(clazz);
+            } catch (Exception e) {
+                plugin.getLogger().log(Level.WARNING, "Failed to load component " + clazz.getName(), e);
                 continue;
             }
         }
-
     }
 
-    // Use reflection to add to active class loader due to how finicky children classloaders can be
-    private void addURL(URL url, URLClassLoader loader) throws IOException {
-        try {
-            Method method = URLClassLoader.class.getDeclaredMethod("addURL", new Class[] {URL.class});
-            method.setAccessible(true);
-            method.invoke(loader, new Object[]{url});
-        } catch (Exception e) {
-            throw new IOException("Error adding URL to ClassLoader", e);
-        }
-
-    }
 
 
     @Override
