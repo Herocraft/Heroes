@@ -1,16 +1,21 @@
 package com.herocraftonline.heroes.api.skills;
 
+import org.spongepowered.api.GameState;
+
 import java.util.Collection;
 
 public interface SkillManager {
 
     /**
-     * Adds a skill to the manager
-     * @param skill The skill to add
-     * @throws java.lang.IllegalStateException if skill registration is attempted after registration lock is enabled
-     *         (after plugin initialization)
+     * Registers the skill with this skill manager, must be called during {@link GameState#INITIALIZATION}
+     * Registration is required for a skill to be usable/identifiable if said registration is not located
+     * within a JAR file inside the skill data folder as defined in the configuration
+     * @param skill The class of the skill to register
+     * @throws java.lang.IllegalStateException if this method is called during any other GameState than INITIALIZATION
+     * @throws java.lang.IllegalArgumentException if the parameter class fails instantiation tests or does not meet
+     *         other requirements
      */
-    void addSkill(Skill skill);
+    void registerSkill(Class<? extends Skill> skill);
 
     /**
      * @return An immutable copy of currently registered skills

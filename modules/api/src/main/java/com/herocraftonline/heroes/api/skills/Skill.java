@@ -1,6 +1,7 @@
 package com.herocraftonline.heroes.api.skills;
 
 import com.herocraftonline.heroes.api.characters.CharacterBase;
+import com.herocraftonline.heroes.api.plugin.HeroesPlugin;
 
 /**
  * Skills serve as character metadata that generally performs some sort of action upon the character and its
@@ -13,10 +14,16 @@ public interface Skill {
     String getName();
 
     /**
+     * Called when a skill is instantiated by the main plugin
+     * @param plugin The heroes plugin instance instantiating the skill
+     */
+    void onInit(HeroesPlugin plugin);
+
+    /**
      * Called when a skill is attached to a character and/or when a character gains access to a skill
      * @param character The character the skill is being attached to
      */
-    void init(CharacterBase character);
+    void onAttach(CharacterBase character);
 
     /**
      * <p>Identifiers are used to determine what skill should be executed when {@code /skill <identifier>}
@@ -41,4 +48,6 @@ public interface Skill {
      * @return The {@link com.herocraftonline.heroes.api.skills.SkillResult} from execution
      */
     SkillResult execute(CharacterBase executor, String[] args);
+
+
 }

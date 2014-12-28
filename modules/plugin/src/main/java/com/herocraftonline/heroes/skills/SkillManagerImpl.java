@@ -4,15 +4,18 @@ import com.herocraftonline.heroes.api.command.Command;
 import com.herocraftonline.heroes.api.plugin.HeroesPlugin;
 import com.herocraftonline.heroes.api.skills.Skill;
 import com.herocraftonline.heroes.api.skills.SkillManager;
+import com.herocraftonline.heroes.util.LoaderUtil;
 import org.spongepowered.api.entity.living.Living;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.util.command.CommandSource;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.logging.Level;
 
 public class SkillManagerImpl implements SkillManager, Command {
 
@@ -38,7 +41,16 @@ public class SkillManagerImpl implements SkillManager, Command {
     }
 
     private void loadSkills() {
-        //TODO
+        File skillDir = new File("Mock File"); //TODO
+        skillDir.mkdirs();
+        for (Class<? extends Skill> clazz : LoaderUtil.instance().loadJARsFromDir(skillDir, Skill.class)) {
+            try {
+                registerSkill(clazz);
+            } catch (Exception e) {
+                plugin.getLogger().log(Level.WARNING, "Failed to load component " + clazz.getName(), e);
+                continue;
+            }
+        }
     }
 
     @Override
@@ -99,14 +111,22 @@ public class SkillManagerImpl implements SkillManager, Command {
     }
 
     @Override
-    public void addSkill(Skill skill) {
+    public void registerSkill(Class<? extends Skill> clazz) {
         if (registrationLock) {
             throw new IllegalStateException("Skill registration must be done during server initialization state");
         }
-        this.skillsByName.put(skill.getName().toLowerCase(), skill);
-        for (String ident : skill.getIdentifiers()) {
-            this.skillsByIdentifiers.put(ident.toLowerCase(), skill);
+        Skill skill = null;
+        try {
+            skill = clazz.getConstructor(new Class<?>[]{}).newInstance(new Object[]{});
+            skill.onInit(plugin);
+            this.skillsByName.put(skill.getName().toLowerCase(), skill);
+            for (String ident : skill.getIdentifiers()) {
+                this.skillsByIdentifiers.put(ident.toLowerCase(), skill);
+            }
+        } catch (Exception e) {
+            throw new IllegalArgumentException("The skill " + skill.getClass().getName() + " failed to initialize.", e);
         }
+        return;
     }
 
     @Override

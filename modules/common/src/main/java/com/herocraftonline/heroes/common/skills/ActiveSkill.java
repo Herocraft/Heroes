@@ -11,7 +11,7 @@ public abstract class ActiveSkill extends BaseSkill {
     }
 
     @Override
-    public void init(CharacterBase character) {
+    public void onAttach(CharacterBase character) {
 
     }
 
