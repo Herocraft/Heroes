@@ -5,12 +5,12 @@ import com.herocraftonline.heroes.api.command.Command;
 import com.herocraftonline.heroes.api.command.CommandHandler;
 import com.herocraftonline.heroes.api.plugin.HeroesPlugin;
 import com.herocraftonline.heroes.skills.SkillManagerImpl;
+import com.herocraftonline.heroes.util.Commons;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.util.command.CommandException;
 import org.spongepowered.api.util.command.CommandSource;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +32,7 @@ public class CommandHandlerImpl implements CommandHandler {
 
     @Override
     public boolean call(CommandSource sender, String args, List<String> commands) throws CommandException {
-        String[] cmd = addAll((String[]) commands.toArray(), args.split(" "));
+        String[] cmd = Commons.addAll((String[]) commands.toArray(), args.split(" "));
         return handle(sender, cmd);
     }
 
@@ -95,43 +95,5 @@ public class CommandHandlerImpl implements CommandHandler {
     @Override
     public String getUsage() {
         return "/hero help";
-    }
-
-    // Apache Commons Methods for efficiency sake TODO: verify license allows us to use this, if not add commons as a
-    // mvn dependency
-
-    public static String[] addAll(String[] array1, String[] array2) {
-        if (array1 == null) {
-            return clone(array2);
-        } else if (array2 == null) {
-            return clone(array1);
-        }
-        String[] joinedArray = (String[]) Array.newInstance(array1.getClass().getComponentType(),
-                array1.length + array2.length);
-        System.arraycopy(array1, 0, joinedArray, 0, array1.length);
-        try {
-            System.arraycopy(array2, 0, joinedArray, array1.length, array2.length);
-        } catch (ArrayStoreException ase) {
-            // Check if problem was due to incompatible types
-            /*
-             * We do this here, rather than before the copy because:
-             * - it would be a wasted check most of the time
-             * - safer, in case check turns out to be too strict
-             */
-            final Class type1 = array1.getClass().getComponentType();
-            final Class type2 = array2.getClass().getComponentType();
-            if (!type1.isAssignableFrom(type2)){
-                throw new IllegalArgumentException("Cannot store "+type2.getName()+" in an array of "+type1.getName());
-            }
-            throw ase; // No, so rethrow original
-        }
-        return joinedArray;
-    }
-
-    public static String[] clone(String[] array) {
-        if (array == null) {
-            return null;
-        }
-        return array.clone();
     }
 }
