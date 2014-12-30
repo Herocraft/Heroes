@@ -1,5 +1,7 @@
 package com.herocraftonline.heroes.api.command;
 
-public interface CommandHandler {
+import org.spongepowered.api.util.command.CommandCallable;
+
+public interface CommandHandler extends CommandCallable {
     //TODO
 }

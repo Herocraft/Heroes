@@ -11,6 +11,7 @@ import com.herocraftonline.heroes.api.io.storage.StorageManager;
 import com.herocraftonline.heroes.api.plugin.HeroesPlugin;
 import com.herocraftonline.heroes.api.skills.SkillConfigManager;
 import com.herocraftonline.heroes.api.skills.SkillManager;
+import com.herocraftonline.heroes.command.CommandHandlerImpl;
 import com.herocraftonline.heroes.component.ComponentManagerImpl;
 import com.herocraftonline.heroes.effects.EffectManagerImpl;
 import com.herocraftonline.heroes.skills.SkillManagerImpl;
@@ -31,6 +32,7 @@ public class HeroesMain implements HeroesPlugin {
     private EffectManager effectManager;
     private SkillManagerImpl skillManager;
     private ComponentManagerImpl componentManager;
+    private CommandHandlerImpl commandHandler;
 
     @Subscribe
     public void onPreInit(PreInitializationEvent event) {
@@ -43,6 +45,7 @@ public class HeroesMain implements HeroesPlugin {
         effectManager = new EffectManagerImpl(this);
         skillManager = new SkillManagerImpl(this);
         componentManager = new ComponentManagerImpl(this);
+        commandHandler = new CommandHandlerImpl(this);
     }
 
     @Subscribe
@@ -73,7 +76,7 @@ public class HeroesMain implements HeroesPlugin {
 
     @Override
     public CommandHandler getCommandHandler() {
-        return null;
+        return commandHandler;
     }
 
     @Override
@@ -88,7 +91,7 @@ public class HeroesMain implements HeroesPlugin {
 
     @Override
     public EffectManager getEffectManager() {
-        return null;
+        return effectManager;
     }
 
     @Override
@@ -108,7 +111,7 @@ public class HeroesMain implements HeroesPlugin {
 
     @Override
     public SkillManager getSkillManager() {
-        return null;
+        return skillManager;
     }
 
     @Override
