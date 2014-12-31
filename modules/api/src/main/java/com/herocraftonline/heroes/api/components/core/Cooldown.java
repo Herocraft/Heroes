@@ -15,6 +15,13 @@ public interface Cooldown {
     long addCooldown(String identifier, long duration);
 
     /**
+     * Clears the given cooldown from the tracker
+     * @param identifier The identifier for this cooldown, case-sensitive
+     * @return The previously associated cooldown expiry, or -1 if none exists.
+     */
+    long clearCooldown(String identifier);
+
+    /**
      * Gets the expiry time of a given cooldown
      * @param identifier The identifier for this cooldown, case-sensitive
      * @return The cooldown's expiry time in milliseconds, or -1 if no cooldown exists

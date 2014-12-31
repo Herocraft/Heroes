@@ -9,9 +9,9 @@ import org.spongepowered.api.entity.living.Living;
 
 public class ComponentHealth implements Component, Health {
 
-    private double maxHealth;
+    private Living living;
+    private double maxHealthSetting;
     private double defaultHealth;
-
 
     @Override
     public Component getFromSettings(Object config) { //TODO
@@ -35,18 +35,44 @@ public class ComponentHealth implements Component, Health {
         if (e == null || !(e instanceof Living)) {
             throw new UnsupportedOperationException("Cannot modify health of an inanimate character");
         }
-        Living l = (Living)e;
-        defaultHealth = l.getMaxHealth();
-        double ratio = l.getHealth()/l.getMaxHealth();
-        l.setMaxHealth(maxHealth);
-        l.setHealth(l.getMaxHealth()*ratio);
+        living = (Living)e;
+        defaultHealth = living.getMaxHealth();
+        double ratio = living.getHealth()/living.getMaxHealth();
+        living.setMaxHealth(maxHealthSetting);
+        living.setHealth(living.getMaxHealth() * ratio);
     }
 
     @Override
     public void onRemove(CharacterBase character) {
-        Living l = (Living)character.getEntity();
-        double ratio = l.getHealth()/l.getMaxHealth();
-        l.setMaxHealth(defaultHealth);
-        l.setHealth(defaultHealth * ratio);
+        if (living.getHealth() > 0) {
+            double ratio = living.getHealth() / living.getMaxHealth();
+            living.setMaxHealth(defaultHealth);
+            living.setHealth(defaultHealth * ratio);
+        }
+        living = null;
+    }
+
+    @Override
+    public double getMaxHealth() {
+        return living.getMaxHealth();
+    }
+
+    @Override
+    public double getHealth() {
+        return living.getHealth();
+    }
+
+    @Override
+    public void setHealth(double amount) {
+        if (amount > living.getMaxHealth()) {
+            throw new IllegalArgumentException("Health must be less than the set maximum health value of " + living
+                    .getMaxHealth());
+        }
+        living.setHealth(amount);
+    }
+
+    @Override
+    public void setMaxHealth(double amount) {
+        living.setMaxHealth(amount);
     }
 }
