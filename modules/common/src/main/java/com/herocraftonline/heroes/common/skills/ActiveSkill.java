@@ -3,6 +3,7 @@ package com.herocraftonline.heroes.common.skills;
 import com.herocraftonline.heroes.api.characters.CharacterBase;
 import com.herocraftonline.heroes.api.plugin.HeroesPlugin;
 import com.herocraftonline.heroes.api.skills.Skill;
+import com.herocraftonline.heroes.api.skills.SkillRequirement;
 import com.herocraftonline.heroes.api.skills.SkillResult;
 
 /**
@@ -20,8 +21,18 @@ public abstract class ActiveSkill implements Skill {
 
     @Override
     public SkillResult execute(CharacterBase character, String[] args) {
-        //TODO
-        return SkillResult.NORMAL;
+        for (SkillRequirement req : plugin.getSkillConfigs().getExecutionRequirements(this, character)) {
+            SkillResult result = req.satisfiesRequirement(character);
+            if (!result.equals(SkillResult.NORMAL)) {
+                return result;
+            } else {
+                continue;
+            }
+        }
+        // TODO call SkillUseEvent
+        SkillResult ret = run(character, args);
+        // TODO call SkillCompleteEvent
+        return ret;
     }
 
     /**
