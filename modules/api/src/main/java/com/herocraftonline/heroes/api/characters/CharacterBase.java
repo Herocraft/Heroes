@@ -1,6 +1,9 @@
 package com.herocraftonline.heroes.api.characters;
 
 import com.herocraftonline.heroes.api.components.Component;
+import com.herocraftonline.heroes.api.components.core.Cooldown;
+import com.herocraftonline.heroes.api.components.core.Health;
+import com.herocraftonline.heroes.api.components.core.Mana;
 import com.herocraftonline.heroes.api.effects.EffectBase;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.player.Player;
@@ -12,9 +15,10 @@ import java.util.UUID;
 /**
  * <p>Represents a character, which is Heroes' representation of any entities that can have effects
  * applied to them, or have components attached to them</p>
- * <p>To obtain a Character instance, use {@link com.herocraftonline.heroes.api.characters.managers.CharacterManager#getCharacter(java.util.UUID)},
- * {@link com.herocraftonline.heroes.api.characters.managers.CharacterManager#getCharacter(org.spongepowered.api.entity.living.Living)}
- * or an appropriate alternate method depending on entity type.</p>
+ * <p>To obtain a Character instance, use {@link com.herocraftonline.heroes.api.characters.managers.CharacterManager
+ * #getCharacter(java.util.UUID)}, @link com.herocraftonline.heroes.api.characters.managers.CharacterManager
+ * #getCharacter(org.spongepowered.api.entity.living.Living)} or an appropriate alternate method depending on entity
+ * type.</p>
  * <p>It is important to note that characters are not restricted to living entities - for instance the Beacon
  * character class in the com.herocraftonline.heroes:Heroes-Common maven module is designed for use with static
  * entities and/or blocks that are immobile/persistent at a certain point in the map(</p>
@@ -22,8 +26,8 @@ import java.util.UUID;
 public interface CharacterBase {
 
     /**
-     * Gets the Entity represented by this character - might not always be present (for instance if this Character represents a
-     * block
+     * Gets the Entity represented by this character - might not always be present (for instance if this Character
+     * represents a block
      * @return The entity that is represented by this character
      */
     Entity getEntity();
@@ -57,7 +61,8 @@ public interface CharacterBase {
     // Effect Methods
 
     /**
-     * Adds the given effect to the Character, initiating its first tick and calling {@link com.herocraftonline.heroes.api.effects.EffectBase#apply(CharacterBase)},
+     * Adds the given effect to the Character, initiating its first tick and calling
+     * {@link com.herocraftonline.heroes.api.effects.EffectBase#apply(CharacterBase)},
      * @param effect The effect to add, will replace any preexisting effects of the same name
      */
     void addEffect(EffectBase effect);
@@ -105,19 +110,39 @@ public interface CharacterBase {
     public Component getComponent(String name);
 
     /**
-     * Adds a component to this Character, and calls {@link Component#onAttach(CharacterBase)} with this character as the
-     * parameter
+     * Adds a component to this Character, and calls {@link Component#onAttach(CharacterBase)} with this character as
+     * the parameter
      * @param component The component to register
      * @return False if an error occurs during attach, true otherwise
      */
     public boolean registerComponent(Component component);
 
     /**
-     * Removes a component from this Character, and calls {@link Component#onRemove(CharacterBase)} with this Character as
-     * the parameter
+     * Removes a component from this Character, and calls {@link Component#onRemove(CharacterBase)} with this Character
+     * as the parameter
      * @param name The name of the component, corresponding to value of {@link Component#getName()}, case sensitive
      * @return The removed component, or null no matching component exists
      */
     public Component unregisterComponent(String name);
+
+    // Core Components
+
+    /**
+     * @return The {@link com.herocraftonline.heroes.api.components.core.Health} component responsible for tracking
+     * health on this character, or null if the component is not enabled for this character
+     */
+    public Health health();
+
+    /**
+     * @return The {@link com.herocraftonline.heroes.api.components.core.Cooldown} component responsible for tracking
+     * cooldowns on this character, or null if the component is not enabled for this character
+     */
+    public Cooldown cooldowns();
+
+    /**
+     * @return The {@link com.herocraftonline.heroes.api.components.core.Mana} component responsible for tracking
+     * mana on this character, or null if the component is not enabled for this character
+     */
+    public Mana mana();
 
 }
