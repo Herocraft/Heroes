@@ -1,5 +1,7 @@
 package com.herocraftonline.heroes.api.io.configuration;
 
+import org.spongepowered.api.service.persistence.data.DataView;
+
 /**
  * Responsible for saving/ retrieving configuration settings from storage (general configuration, class configs,
  * and skill configs, amongst others), and converting them into DataView objects parseable
@@ -12,7 +14,7 @@ public interface ConfigurationProvider {
      *             where data is stored is left to the implementing class
      * @return A DataView representation of the data located under said path
      */
-    Object getConfiguration(String path);
+    DataView getConfiguration(String path);
 
     /**
      * Saves the given data to the given path
@@ -20,5 +22,5 @@ public interface ConfigurationProvider {
      *             where data is stored is left to the implementing class
      * @param data A DataView representation of the data to save
      */
-    void saveConfiguration(String path, Object data);
+    void saveConfiguration(String path, DataView data);
 }

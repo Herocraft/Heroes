@@ -1,6 +1,7 @@
 package com.herocraftonline.heroes.api.skills;
 
 import com.herocraftonline.heroes.api.characters.CharacterBase;
+import org.spongepowered.api.service.persistence.data.DataView;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -49,10 +50,9 @@ public interface SkillConfigManager {
      * @return A DataView (identical to global value unless overridden in the character's settings or the
      * settings of the character's class) located  for the parameter skill, or the provided default if
      * no such setting exists
-     * TODO: Object -> DataView
      */
-    Object getCharacterSkillSection(CharacterBase character, Skill skill, String path, Object def,
-                                    Comparator<Object> comparator);
+    DataView getCharacterSkillSection(CharacterBase character, Skill skill, String path, Object def,
+                                    Comparator<DataView> comparator);
 
     /**
      * Saves a given data value to a given path within a character's skill settings
@@ -71,9 +71,8 @@ public interface SkillConfigManager {
      * @param path The path of the DataView
      * @param data The data to save, null will cause removal of setting if it existed
      * @return The previous value if present, or null
-     * TODO: Object->DataView
      */
-    Object setCharacterSkillSection(CharacterBase character, Skill skill, String path, Object data);
+    DataView setCharacterSkillSection(CharacterBase character, Skill skill, String path, DataView data);
 
     /**
      * A collection of requirements to execute the given skill, as defined in the character's configuration

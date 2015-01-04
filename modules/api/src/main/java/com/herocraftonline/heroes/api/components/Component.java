@@ -3,6 +3,7 @@ package com.herocraftonline.heroes.api.components;
 import com.herocraftonline.heroes.api.characters.CharacterBase;
 import com.herocraftonline.heroes.api.plugin.HeroesPlugin;
 import org.spongepowered.api.GameState;
+import org.spongepowered.api.service.persistence.data.DataView;
 
 /**
  * <p>Components represent persistent metadata that can be attached to a Characters, generally through the usage of
@@ -65,11 +66,10 @@ public interface Component {
 
     /**
      * Actions to take when a component is saved. The guarantee is made that the given character has the component
-     * TODO pending persistence API PR Merge
      * @param character The Character to which the component is registered
      * @returns A {@link DataView} representation that can then be saved to the character
      */
-    //DataView onSave(Character character);
+    DataView onSave(Character character);
 
 
 }
