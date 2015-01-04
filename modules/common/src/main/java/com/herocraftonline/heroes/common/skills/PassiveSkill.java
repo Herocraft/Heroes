@@ -36,9 +36,8 @@ public abstract class PassiveSkill implements Skill {
     public SkillResult execute(CharacterBase character, String[] args) {
         if (character instanceof Hero) {
             ((Hero)character).getPlayer().sendMessage(ChatTypes.CHAT, plugin.getConfigManager()
-                    .getMessaging("passive-skill-no-use", "$1 is a passive skill and is active without " +
-                            "being run").replace("$1", getName()));
-            //TODO: configurable messaging (if even feasible in common)
+                    .getMessaging().getMessage("passive-skill-no-use", "%skill% is a passive skill and is active without " +
+                            "being run").replace("%skill%", getName()));
         }
         return SkillResult.NORMAL;
     }

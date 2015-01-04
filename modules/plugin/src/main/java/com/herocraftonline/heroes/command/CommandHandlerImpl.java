@@ -3,6 +3,7 @@ package com.herocraftonline.heroes.command;
 import com.google.common.base.Optional;
 import com.herocraftonline.heroes.api.command.Command;
 import com.herocraftonline.heroes.api.command.CommandHandler;
+import com.herocraftonline.heroes.api.io.configuration.Messaging;
 import com.herocraftonline.heroes.api.plugin.HeroesPlugin;
 import com.herocraftonline.heroes.skills.SkillManagerImpl;
 import com.herocraftonline.heroes.util.Commons;
@@ -13,6 +14,7 @@ import org.spongepowered.api.util.command.CommandSource;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class CommandHandlerImpl implements CommandHandler {
@@ -20,9 +22,19 @@ public class CommandHandlerImpl implements CommandHandler {
     private final HeroesPlugin plugin;
     private HashMap<String, Command> commandsByIdentifier;
     private SkillManagerImpl skillManager;
+    private HashSet<String> skillIdents;
+    private Messaging messaging;
 
     public CommandHandlerImpl(HeroesPlugin plugin) {
         this.plugin = plugin;
+        this.messaging = plugin.getConfigManager().getMessaging();
+        this.skillIdents = new HashSet<>();
+        for (String ident : Arrays.asList(messaging.getCommandIdentifiers("skill-execution",
+                new String[] {"skill", "cast"}))) {
+            this.skillIdents.add(ident.toLowerCase());
+        }
+        this.skillManager = (SkillManagerImpl) plugin.getSkillManager();
+        this.commandsByIdentifier = new HashMap<>();
     }
 
     @Override
@@ -37,7 +49,7 @@ public class CommandHandlerImpl implements CommandHandler {
     }
 
     private boolean handle(CommandSource sender, String[] cmd) {
-        if (cmd[0].equalsIgnoreCase("skill")) {
+        if (this.skillIdents.contains(cmd[0].toLowerCase())) {
             /*
              * Special case is handled by skill manager
              * We check for this first due to the relative importance of having skill commands execute asap
@@ -91,13 +103,15 @@ public class CommandHandlerImpl implements CommandHandler {
 
     @Override
     public Optional<String> getShortDescription() {
-        return Optional.of("Commands to control the Heroes RPG Plugin");
+        return Optional.of(plugin.getConfigManager().getMessaging().getMessage("main-command-short-desc","" +
+                "Commands to control the Heroes RPG Plugin"));
     }
 
     @Override
     public Optional<String> getHelp() {
-        return Optional.of("Commands to control the Heroes RPG Plugin - use /hero help to view a full list of commands " +
-                "available to you.");
+        return Optional.of(plugin.getConfigManager().getMessaging().getMessage("main-command-help","Commands " +
+                "to control the Heroes RPG Plugin - use /hero help to view a full list of commands " +
+                "available to you."));
     }
 
     @Override

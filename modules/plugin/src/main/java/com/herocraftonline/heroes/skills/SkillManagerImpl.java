@@ -27,8 +27,8 @@ public class SkillManagerImpl implements SkillManager, Command {
 
     public SkillManagerImpl(HeroesPlugin plugin) {
         this.plugin = plugin;
-        this.skillsByIdentifiers = new HashMap<String, Skill>();
-        this.skillsByName = new HashMap<String, Skill>();
+        this.skillsByIdentifiers = new HashMap<>();
+        this.skillsByName = new HashMap<>();
         this.registrationLock = false;
     }
 
@@ -87,7 +87,7 @@ public class SkillManagerImpl implements SkillManager, Command {
 
     @Override
     public String getHelp() {
-        return "View available skills with /skills";
+        return plugin.getConfigManager().getMessaging().getCommandHelp("skills", "View available skills with /skills");
     }
 
     @Override
@@ -103,6 +103,16 @@ public class SkillManagerImpl implements SkillManager, Command {
     @Override
     public int getMaxArguments() {
         return -1;
+    }
+
+    @Override
+    public String[] getIdentifiers() {
+        return new String[0];  // Does not matter since we are not registering this as a traditional command
+    }
+
+    @Override
+    public String getUsage() {
+        return "/skill skillname";
     }
 
     @Override

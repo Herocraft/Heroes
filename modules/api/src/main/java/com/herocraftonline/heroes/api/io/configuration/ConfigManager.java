@@ -8,11 +8,9 @@ package com.herocraftonline.heroes.api.io.configuration;
 public interface ConfigManager {
 
     /**
-     * Gets a user defined string for messaging with the given key identifier
-     * @param key The message key/identifier, non case-sensitive
-     * @param def A default string to use/populate the configuration if no value exists under the parameter key
-     * @return The string defined in messaging under the specified key, or the provided default
+     * @return The {@link Messaging} instance associated with this configuration manager, which is responsible for
+     *         any/all Strings that may be sent/retrieved from the end user
      */
-    String getMessaging(String key, String def);
+    Messaging getMessaging();
     //TODO
 }

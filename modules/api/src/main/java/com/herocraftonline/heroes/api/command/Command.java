@@ -37,6 +37,12 @@ public interface Command {
     int getMaxArguments();
 
     /**
+     * @return An array of identifiers by which this command can be executed - these identifiers should not contain
+     *         the leading forward slash and are not case sensitive
+     */
+    String[] getIdentifiers();
+
+    /**
      * @return A simple string representation of what correct usage of the argument would look like
      */
     String getUsage();
