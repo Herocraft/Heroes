@@ -70,6 +70,14 @@ public class CommandHandlerImpl implements CommandHandler {
             }
             // Remaining Arguments
             String[] args = Arrays.copyOfRange(cmd, identifierLength, cmd.length);
+            // Check argument length
+            int len = args.length;
+            if (len < command.getMinArguments() || (command.getMaxArguments() != -1
+                    && len > command.getMaxArguments())) {
+                sender.sendMessage(TextColors.GRAY + "Invalid arguments - correct usage is " + command.getUsage());
+                return true;
+            }
+
             return command.execute(sender, args);
         }
         // No Match TODO: send message? pending verification of how new command system works

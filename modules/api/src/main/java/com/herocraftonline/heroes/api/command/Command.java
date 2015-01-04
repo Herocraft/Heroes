@@ -36,10 +36,15 @@ public interface Command {
      */
     int getMaxArguments();
 
+    /**
+     * @return A simple string representation of what correct usage of the argument would look like
+     */
+    String getUsage();
 
     /**
      * @return Whether help for this command should be shown in the help menu
      */
     boolean showInHelp();
+
 
 }
