@@ -21,7 +21,7 @@ public abstract class ActiveSkill implements Skill {
 
     @Override
     public SkillResult execute(CharacterBase character, String[] args) {
-        for (SkillRequirement req : plugin.getSkillConfigs().getExecutionRequirements(this, character)) {
+        for (SkillRequirement req : character.getSkillTracker().getRequirements(getName())) {
             SkillResult result = req.satisfiesRequirement(character);
             if (!result.equals(SkillResult.NORMAL)) {
                 return result;

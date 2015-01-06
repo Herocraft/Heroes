@@ -4,6 +4,7 @@ import com.herocraftonline.heroes.api.components.Component;
 import com.herocraftonline.heroes.api.components.core.Cooldown;
 import com.herocraftonline.heroes.api.components.core.Health;
 import com.herocraftonline.heroes.api.components.core.Mana;
+import com.herocraftonline.heroes.api.components.core.Skills;
 import com.herocraftonline.heroes.api.effects.EffectBase;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.player.Player;
@@ -144,5 +145,12 @@ public interface CharacterBase {
      * mana on this character, or null if the component is not enabled for this character
      */
     public Mana mana();
+
+    /**
+     * @return The {@link com.herocraftonline.heroes.api.components.core.Skills} component responsible for tracking
+     * accessible skills and associated requirements on this character, or null if the component is not enabled for this
+     * character (the character has access to no skills)
+     */
+    public Skills getSkillTracker();
 
 }

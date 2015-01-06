@@ -3,7 +3,6 @@ package com.herocraftonline.heroes.api.skills;
 import com.herocraftonline.heroes.api.characters.CharacterBase;
 import org.spongepowered.api.service.persistence.data.DataView;
 
-import java.util.Collection;
 import java.util.Comparator;
 
 /**
@@ -73,14 +72,6 @@ public interface SkillConfigManager {
      * @return The previous value if present, or null
      */
     DataView setCharacterSkillSection(CharacterBase character, Skill skill, String path, DataView data);
-
-    /**
-     * A collection of requirements to execute the given skill, as defined in the character's configuration
-     * @param skill The skill to get requirements for
-     * @param character The character executing the skill
-     * @return A collection of requirements
-     */
-    Collection<SkillRequirement> getExecutionRequirements(Skill skill, CharacterBase character);
 
 
 }
