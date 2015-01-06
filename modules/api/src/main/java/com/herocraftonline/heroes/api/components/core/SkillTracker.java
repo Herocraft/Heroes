@@ -8,7 +8,7 @@ import java.util.Collection;
  * Handles tracking what skills are available to the attached character. Information tracked by this component includes
  * what skills are available to a given character and what requirements are needed to execute said skill.
  */
-public interface Skills {
+public interface SkillTracker {
 
     /**
      * Adds a given skill to the accessible skills of this component. This is tracked independently on a character
@@ -32,7 +32,7 @@ public interface Skills {
 
     /**
      * @param skill The name of the skill to check
-     * @return A collection of requirements that must be satisfied
+     * @return A collection of requirements that must be satisfied to
      */
     Collection<SkillRequirement> getRequirements(String skill);
 

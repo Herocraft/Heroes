@@ -2,12 +2,12 @@ package com.herocraftonline.heroes.common.components;
 
 import com.herocraftonline.heroes.api.characters.CharacterBase;
 import com.herocraftonline.heroes.api.components.Component;
-import com.herocraftonline.heroes.api.components.core.Health;
+import com.herocraftonline.heroes.api.components.core.HealthTracker;
 import com.herocraftonline.heroes.api.plugin.HeroesPlugin;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.living.Living;
 
-public class ComponentHealth implements Component, Health {
+public class ComponentHealth implements Component, HealthTracker {
 
     private Living living;
     private double maxHealthSetting;

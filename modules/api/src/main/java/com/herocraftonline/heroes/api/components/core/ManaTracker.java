@@ -4,7 +4,7 @@ package com.herocraftonline.heroes.api.components.core;
 /**
  * Component that tracks mana on a character and allows for definition of custom health values
  */
-public interface Mana {
+public interface ManaTracker {
     /**
      * @return The maximum mana value for the character to which this component is attached
      */

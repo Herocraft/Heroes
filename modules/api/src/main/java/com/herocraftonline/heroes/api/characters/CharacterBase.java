@@ -1,10 +1,10 @@
 package com.herocraftonline.heroes.api.characters;
 
 import com.herocraftonline.heroes.api.components.Component;
-import com.herocraftonline.heroes.api.components.core.Cooldown;
-import com.herocraftonline.heroes.api.components.core.Health;
-import com.herocraftonline.heroes.api.components.core.Mana;
-import com.herocraftonline.heroes.api.components.core.Skills;
+import com.herocraftonline.heroes.api.components.core.CooldownTracker;
+import com.herocraftonline.heroes.api.components.core.HealthTracker;
+import com.herocraftonline.heroes.api.components.core.ManaTracker;
+import com.herocraftonline.heroes.api.components.core.SkillTracker;
 import com.herocraftonline.heroes.api.effects.EffectBase;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.player.Player;
@@ -129,28 +129,28 @@ public interface CharacterBase {
     // Core Components
 
     /**
-     * @return The {@link com.herocraftonline.heroes.api.components.core.Health} component responsible for tracking
+     * @return The {@link com.herocraftonline.heroes.api.components.core.HealthTracker} component responsible for tracking
      * health on this character, or null if the component is not enabled for this character
      */
-    public Health health();
+    public HealthTracker getHealthTracker();
 
     /**
-     * @return The {@link com.herocraftonline.heroes.api.components.core.Cooldown} component responsible for tracking
+     * @return The {@link com.herocraftonline.heroes.api.components.core.CooldownTracker} component responsible for tracking
      * cooldowns on this character, or null if the component is not enabled for this character
      */
-    public Cooldown cooldowns();
+    public CooldownTracker getCooldownTracker();
 
     /**
-     * @return The {@link com.herocraftonline.heroes.api.components.core.Mana} component responsible for tracking
+     * @return The {@link com.herocraftonline.heroes.api.components.core.ManaTracker} component responsible for tracking
      * mana on this character, or null if the component is not enabled for this character
      */
-    public Mana mana();
+    public ManaTracker getManaTracker();
 
     /**
-     * @return The {@link com.herocraftonline.heroes.api.components.core.Skills} component responsible for tracking
+     * @return The {@link com.herocraftonline.heroes.api.components.core.SkillTracker} component responsible for tracking
      * accessible skills and associated requirements on this character, or null if the component is not enabled for this
      * character (the character has access to no skills)
      */
-    public Skills getSkillTracker();
+    public SkillTracker getSkillTracker();
 
 }

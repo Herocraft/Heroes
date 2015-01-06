@@ -2,12 +2,12 @@ package com.herocraftonline.heroes.common.components;
 
 import com.herocraftonline.heroes.api.characters.CharacterBase;
 import com.herocraftonline.heroes.api.components.Component;
-import com.herocraftonline.heroes.api.components.core.Cooldown;
+import com.herocraftonline.heroes.api.components.core.CooldownTracker;
 import com.herocraftonline.heroes.api.plugin.HeroesPlugin;
 
 import java.util.HashMap;
 
-public class ComponentCooldown implements Component, Cooldown {
+public class ComponentCooldown implements Component, CooldownTracker {
 
     private HashMap<String, Long> cooldowns;
 

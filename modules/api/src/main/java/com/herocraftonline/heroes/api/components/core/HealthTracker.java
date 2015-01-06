@@ -3,7 +3,7 @@ package com.herocraftonline.heroes.api.components.core;
 /**
  * Component that tracks health on a character and allows for definition of custom health values
  */
-public interface Health {
+public interface HealthTracker {
     /**
      * @return The maximum health value for the character to which this component is attached
      */

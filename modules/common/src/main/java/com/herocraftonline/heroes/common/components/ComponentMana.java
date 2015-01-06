@@ -2,9 +2,10 @@ package com.herocraftonline.heroes.common.components;
 
 import com.herocraftonline.heroes.api.characters.CharacterBase;
 import com.herocraftonline.heroes.api.components.Component;
+import com.herocraftonline.heroes.api.components.core.ManaTracker;
 import com.herocraftonline.heroes.api.plugin.HeroesPlugin;
 
-public class ComponentMana implements Component {
+public class ComponentMana implements Component, ManaTracker {
 
     private long currMana;
     private long maxMana;

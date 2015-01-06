@@ -3,7 +3,7 @@ package com.herocraftonline.heroes.api.components.core;
 /**
  * Component that tracks cooldowns on a character - which in essence maps an identifier to a specific timestamp
  */
-public interface Cooldown {
+public interface CooldownTracker {
 
     /**
      * Adds a new cooldown for the character to which this component is attached. Will replace any cooldowns for the
