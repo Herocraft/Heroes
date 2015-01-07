@@ -1,9 +1,8 @@
 package com.herocraftonline.heroes.api.skills;
 
 import com.herocraftonline.heroes.api.characters.CharacterBase;
+import com.herocraftonline.heroes.api.util.Combiner;
 import org.spongepowered.api.service.persistence.data.DataView;
-
-import java.util.Comparator;
 
 /**
  * Represents a condition that must be met before a skill can be executed by a specific character. Implementations
@@ -14,14 +13,14 @@ public interface SkillRequirement {
     /**
      * Initializes the requirement.
      * @param data A DataView representation of the data for the character this requirement is being initialized for
-     *             conflicts will be resolved by {@link #comparator()}
+     *             conflicts will be resolved by {@link #combiner()}
      */
     void init(DataView data);
 
     /**
-     * @return A comparator that resolves multiple DataViews being present for the same requirement
+     * @return A combiner that resolves multiple DataViews being present for the same requirement
      */
-    Comparator<DataView> comparator();
+    Combiner<DataView> combiner();
 
     /**
      * Checks whether a given character satisfies this requirement
