@@ -2,16 +2,15 @@ package com.herocraftonline.heroes.common.components;
 
 import com.herocraftonline.heroes.api.characters.CharacterBase;
 import com.herocraftonline.heroes.api.components.Component;
-import com.herocraftonline.heroes.api.components.core.ManaTracker;
+import com.herocraftonline.heroes.api.components.core.SkillTracker;
 import com.herocraftonline.heroes.api.plugin.HeroesPlugin;
+import com.herocraftonline.heroes.api.skills.SkillRequirement;
 import com.herocraftonline.heroes.api.util.Combiner;
-import org.spongepowered.api.service.persistence.data.DataQuery;
 import org.spongepowered.api.service.persistence.data.DataView;
 
-public class ComponentMana implements Component, ManaTracker {
+import java.util.Collection;
 
-    private long currMana;
-    private long maxMana;
+public class ComponentSkills implements Component, SkillTracker {
 
     @Override
     public boolean cloneOnLoad() {
@@ -20,7 +19,7 @@ public class ComponentMana implements Component, ManaTracker {
 
     @Override
     public String getName() {
-        return "mana";
+        return null;
     }
 
     @Override
@@ -30,13 +29,7 @@ public class ComponentMana implements Component, ManaTracker {
 
     @Override
     public void onAttach(CharacterBase character, DataView data) {
-        long max = data.getLong(new DataQuery("max")).or(0L);
-        if (character != null) {
-            long perLevel = data.getLong(new DataQuery("max-per-level")).or(0L);
-        }
 
-        long mana = data.getLong(new DataQuery("current")).or(maxMana);
-        return; //TODO
     }
 
     @Override
@@ -56,26 +49,26 @@ public class ComponentMana implements Component, ManaTracker {
 
     @Override
     public Component clone() {
+        return new ComponentSkills();
+    }
+
+    @Override
+    public void addSkill(String skill) {
+
+    }
+
+    @Override
+    public boolean hasSkill(String skill) {
+        return false;
+    }
+
+    @Override
+    public void removeSkill(String skill) {
+
+    }
+
+    @Override
+    public Collection<SkillRequirement> getRequirements(String skill) {
         return null;
-    }
-
-    @Override
-    public double getMaxMana() {
-        return 0;
-    }
-
-    @Override
-    public double getMana() {
-        return 0;
-    }
-
-    @Override
-    public void setMana(double amount) {
-
-    }
-
-    @Override
-    public void setMaxMana(double amount) {
-
     }
 }

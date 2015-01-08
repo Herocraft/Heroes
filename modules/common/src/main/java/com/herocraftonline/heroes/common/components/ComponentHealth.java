@@ -4,8 +4,10 @@ import com.herocraftonline.heroes.api.characters.CharacterBase;
 import com.herocraftonline.heroes.api.components.Component;
 import com.herocraftonline.heroes.api.components.core.HealthTracker;
 import com.herocraftonline.heroes.api.plugin.HeroesPlugin;
+import com.herocraftonline.heroes.api.util.Combiner;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.living.Living;
+import org.spongepowered.api.service.persistence.data.DataView;
 
 public class ComponentHealth implements Component, HealthTracker {
 
@@ -13,10 +15,10 @@ public class ComponentHealth implements Component, HealthTracker {
     private double maxHealthSetting;
     private double defaultHealth;
 
-    @Override
-    public Component getFromSettings(Object config) { //TODO
 
-        return null;
+    @Override
+    public boolean cloneOnLoad() {
+        return true;
     }
 
     @Override
@@ -30,7 +32,7 @@ public class ComponentHealth implements Component, HealthTracker {
     }
 
     @Override
-    public void onAttach(CharacterBase character) {
+    public void onAttach(CharacterBase character, DataView data) {
         Entity e = character.getEntity();
         if (e == null || !(e instanceof Living)) {
             throw new UnsupportedOperationException("Cannot modify health of an inanimate character");
@@ -50,6 +52,21 @@ public class ComponentHealth implements Component, HealthTracker {
             living.setHealth(defaultHealth * ratio);
         }
         living = null;
+    }
+
+    @Override
+    public DataView onSave(Character character) {
+        return null;
+    }
+
+    @Override
+    public Combiner<DataView> getCombiner() {
+        return null;
+    }
+
+    @Override
+    public Component clone() {
+        return null;
     }
 
     @Override

@@ -4,6 +4,9 @@ import com.herocraftonline.heroes.api.characters.CharacterBase;
 import com.herocraftonline.heroes.api.components.Component;
 import com.herocraftonline.heroes.api.components.core.CooldownTracker;
 import com.herocraftonline.heroes.api.plugin.HeroesPlugin;
+import com.herocraftonline.heroes.api.util.Combiner;
+import org.spongepowered.api.service.persistence.data.DataQuery;
+import org.spongepowered.api.service.persistence.data.DataView;
 
 import java.util.HashMap;
 
@@ -12,28 +15,47 @@ public class ComponentCooldown implements Component, CooldownTracker {
     private HashMap<String, Long> cooldowns;
 
     @Override
-    public Component getFromSettings(Object config) {
-        return null;
+    public boolean cloneOnLoad() {
+        return true;
     }
 
     @Override
     public String getName() {
-        return null;
+        return "cooldowns";
     }
 
     @Override
     public void onInit(HeroesPlugin plugin) {
-        // Do nothing here, we don't want to allocate memory until necessary
+
     }
 
     @Override
-    public void onAttach(CharacterBase character) {
-        cooldowns = new HashMap<String, Long>();
+    public void onAttach(CharacterBase character, DataView data) {
+        this.cooldowns = new HashMap<>();
+        for (String skillName : data.getKeys(false)) {
+            cooldowns.put(skillName, data.getLong(new DataQuery(skillName)).or(-1L));
+        }
+        return;
     }
 
     @Override
     public void onRemove(CharacterBase character) {
         cooldowns = null;
+    }
+
+    @Override
+    public DataView onSave(Character character) {
+        return null; // TODO pending further persistence API
+    }
+
+    @Override
+    public Combiner<DataView> getCombiner() {
+        return null;
+    }
+
+    @Override
+    public Component clone() {
+        return new ComponentCooldown();
     }
 
     @Override
