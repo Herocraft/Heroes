@@ -28,7 +28,7 @@ public interface CharacterBase {
 
     /**
      * Gets the Entity represented by this character - might not always be present (for instance if this Character
-     * represents a block
+     * represents a block)
      * @return The entity that is represented by this character
      */
     Entity getEntity();
