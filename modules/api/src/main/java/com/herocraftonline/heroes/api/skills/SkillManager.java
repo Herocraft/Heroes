@@ -18,6 +18,18 @@ public interface SkillManager {
     void registerSkill(Class<? extends Skill> skill);
 
     /**
+     * @param name The name of the skill
+     * @return true if a skill matching the provided name exists and is registered with this manager
+     */
+    boolean isSkill(String name);
+
+    /**
+     * @param name The name of the skill
+     * @return The skill, if it exists
+     */
+    Skill getSkill(String name);
+
+    /**
      * @return An immutable copy of currently registered skills
      */
     Collection<Skill> getSkills();
