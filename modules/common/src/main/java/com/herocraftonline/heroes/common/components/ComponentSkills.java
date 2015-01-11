@@ -9,8 +9,16 @@ import com.herocraftonline.heroes.api.util.Combiner;
 import org.spongepowered.api.service.persistence.data.DataView;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class ComponentSkills implements Component, SkillTracker {
+
+    private HashMap<String, DataView> classSkills;
+    private HashMap<String, DataView> overrideSkills;
+    private HashSet<String> negatedSkills;
+
+    private HeroesPlugin plugin;
 
     @Override
     public boolean cloneOnLoad() {
@@ -19,17 +27,19 @@ public class ComponentSkills implements Component, SkillTracker {
 
     @Override
     public String getName() {
-        return null;
+        return "skills";
     }
 
     @Override
     public void onInit(HeroesPlugin plugin) {
-
+        this.plugin = plugin;
     }
 
     @Override
     public void onAttach(CharacterBase character, DataView data) {
-
+        this.classSkills = new HashMap<>();
+        this.overrideSkills = new HashMap<>();
+        this.negatedSkills = new HashSet<>();
     }
 
     @Override
@@ -53,7 +63,7 @@ public class ComponentSkills implements Component, SkillTracker {
     }
 
     @Override
-    public void addSkill(String skill) {
+    public void addSkill(String skill, DataView config) {
 
     }
 
@@ -65,6 +75,28 @@ public class ComponentSkills implements Component, SkillTracker {
     @Override
     public void removeSkill(String skill) {
 
+    }
+
+    @Override
+    public void negateSkill(String skill) {
+
+    }
+
+    @Override
+    public void unnegateSkill(String skill) {
+        if (negatedSkills.contains(skill.toLowerCase())) {
+            negatedSkills.remove(skill.toLowerCase());
+            recalculateClassSkills();
+        }
+    }
+
+    private void recalculateClassSkills() {
+
+    }
+
+    @Override
+    public boolean isNegated(String skill) {
+        return false;
     }
 
     @Override
