@@ -48,10 +48,6 @@
 			<id>heroes-repo</id>
 			<url>http://nexus.theyeticave.net/content/groups/herocraft/</url>
 		</repository>
-		<repository>
-			<id>sms-dropbox</id>
-			<url>http://dl.dropboxusercontent.com/u/12467600/maven-repo</url>
-		</repository>
 	</repositories>
 
 	<dependencies>

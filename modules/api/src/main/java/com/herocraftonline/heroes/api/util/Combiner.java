@@ -5,10 +5,9 @@ package com.herocraftonline.heroes.api.util;
  */
 public interface Combiner<T> {
     /**
-     * @param o1 The first object - should be the object with the higher priority if ordering matters
-     *           i.e. a combiner for skill data would have this be data defined in the character class
-     *           with the second parameter being data defined in general configuration, likewise
-     *           with character file vs. character class
+     * The guarantee to implementations is made that - should the objects in question have some sort of priority over
+     * the other, the higher priority object will be in the first argument.
+     * @param o1 The first object
      * @param o2 The second object
      * @return The result of combining the two objects
      */
