@@ -42,7 +42,7 @@
 	<repositories>
 		<repository>
 			<id>sponge-repo</id>
-			<url>http://repo.spongepowered.org/sponge/maven/</url>
+			<url>http://repo.spongepowered.org/maven/</url>
 		</repository>
 		<repository>
 			<id>heroes-repo</id>
