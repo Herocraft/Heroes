@@ -119,7 +119,11 @@ public class ComponentSkills implements Component, SkillTracker {
 
     private static class SkillDataCombiner implements Combiner<DataView> {
 
-        public static SkillDataCombiner instance = new SkillDataCombiner();
+        public static SkillDataCombiner instance;
+
+        static {
+            instance = new SkillDataCombiner();
+        }
 
         /*
          * Overall logic flow
@@ -152,7 +156,6 @@ public class ComponentSkills implements Component, SkillTracker {
                 ret.set(entry.getKey(), entry.getValue());
             }
             // Process skill removals
-
             if (ret.contains(skillRemoval) && ret.contains(skillGrant)) {
                 DataView grantView = ret.getView(skillGrant).get();
                 DataView removalView = ret.getView(skillRemoval).get();
