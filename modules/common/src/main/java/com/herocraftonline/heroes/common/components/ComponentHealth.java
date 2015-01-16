@@ -1,5 +1,6 @@
 package com.herocraftonline.heroes.common.components;
 
+import com.herocraftonline.heroes.Heroes;
 import com.herocraftonline.heroes.api.characters.CharacterBase;
 import com.herocraftonline.heroes.api.components.Component;
 import com.herocraftonline.heroes.api.components.core.HealthTracker;
@@ -14,13 +15,18 @@ import java.util.Map.Entry;
 
 public class ComponentHealth implements Component, HealthTracker {
 
+    private static String COMBINE_MODE = "health-combine-mode";
+
     private static String BASE_HEALTH_KEY = "base-health";
     private static String HEALTH_PER_LEVEL_KEY = "health-per-level";
     private static String HEALTH_BOOST_KEY = "health-boosts";
+    private static String TIER = "tier";
 
     private Living living;
     private double maxHealthSetting;
     private double defaultHealth;
+
+    private HeroesPlugin plugin;
 
 
     @Override
@@ -35,7 +41,7 @@ public class ComponentHealth implements Component, HealthTracker {
 
     @Override
     public void onInit(HeroesPlugin plugin) {
-
+        this.plugin = plugin;
     }
 
     @Override
@@ -102,6 +108,13 @@ public class ComponentHealth implements Component, HealthTracker {
 
     private static class HealthDataCombiner implements Combiner<DataView> {
 
+        private enum CombineMode {
+            LARGER,
+            LOWER,
+            TIER,
+            COMBINE;
+        }
+
         public static HealthDataCombiner instance;
 
         static {
@@ -124,8 +137,66 @@ public class ComponentHealth implements Component, HealthTracker {
                     retBoosts.set(entry.getKey(), entry.getValue());
                 }
             }
-            // Compare selected values only, and return config of the two TODO
-
+            // Compare selected values only, and return config of the two
+            CombineMode mode = CombineMode.valueOf(Heroes.getInstance().getConfigManager().getConfig(COMBINE_MODE));
+            if (mode == null) { // Silent default to combine
+                mode = CombineMode.COMBINE;
+            }
+            switch (mode) {
+                case LARGER: {
+                    DataQuery base = new DataQuery(BASE_HEALTH_KEY);
+                    double health1 = o1.getDouble(base).or(0D);
+                    double health2 = o2.getDouble(base).or(0D);
+                    ret.set(base, health1 > health2 ? health1 : health2);
+                    DataQuery perLevel = new DataQuery(HEALTH_PER_LEVEL_KEY);
+                    double pLevel1 = o1.getDouble(perLevel).or(0D);
+                    double pLevel2 = o2.getDouble(perLevel).or(0D);
+                    ret.set(perLevel, pLevel1 > pLevel2 ? pLevel1 : pLevel2);
+                    break;
+                }
+                case LOWER: {
+                    DataQuery base = new DataQuery(BASE_HEALTH_KEY);
+                    double health1 = o1.getDouble(base).or(0D);
+                    double health2 = o2.getDouble(base).or(0D);
+                    ret.set(base, health1 < health2 ? health1 : health2);
+                    DataQuery perLevel = new DataQuery(HEALTH_PER_LEVEL_KEY);
+                    double pLevel1 = o1.getDouble(perLevel).or(0D);
+                    double pLevel2 = o2.getDouble(perLevel).or(0D);
+                    ret.set(perLevel, pLevel1 < pLevel2 ? pLevel1 : pLevel2);
+                    break;
+                }
+                case TIER: {
+                    DataQuery tier = new DataQuery(TIER);
+                    int tier1 = o1.getInt(tier).or(-1);
+                    int tier2 = o2.getInt(tier).or(-1);
+                    ret.set(tier, tier1 > tier2 ? tier1 : tier2);
+                    DataQuery base = new DataQuery(BASE_HEALTH_KEY);
+                    DataQuery perLevel = new DataQuery(HEALTH_PER_LEVEL_KEY);
+                    if (tier1 >= tier2) { // If tiers match we use what heroes internally determines to be higher
+                        double health1 = o1.getDouble(base).or(0D);
+                        ret.set(base, health1);
+                        double pLevel1 = o1.getDouble(perLevel).or(0D);
+                        ret.set(perLevel, pLevel1);
+                    } else {
+                        double health2 = o2.getDouble(base).or(0D);
+                        ret.set(base, health2);
+                        double pLevel2 = o2.getDouble(perLevel).or(0D);
+                        ret.set(perLevel, pLevel2);
+                    }
+                    break;
+                }
+                case COMBINE: {
+                    DataQuery base = new DataQuery(BASE_HEALTH_KEY);
+                    double health1 = o1.getDouble(base).or(0D);
+                    double health2 = o2.getDouble(base).or(0D);
+                    ret.set(base, health1 + health2);
+                    DataQuery perLevel = new DataQuery(HEALTH_PER_LEVEL_KEY);
+                    double pLevel1 = o1.getDouble(perLevel).or(0D);
+                    double pLevel2 = o2.getDouble(perLevel).or(0D);
+                    ret.set(perLevel, pLevel1 + pLevel2);
+                    break;
+                }
+            }
             return ret;
         }
     }

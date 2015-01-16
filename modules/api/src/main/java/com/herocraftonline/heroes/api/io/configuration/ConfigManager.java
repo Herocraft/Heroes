@@ -12,5 +12,11 @@ public interface ConfigManager {
      *         any/all Strings that may be sent/retrieved from the end user
      */
     Messaging getMessaging();
-    //TODO
+
+    /**
+     * @param key The configuration key, case-sensitive
+     * @return A string representation of the value stored in configuration
+     */
+    String getConfig(String key);
+
 }
