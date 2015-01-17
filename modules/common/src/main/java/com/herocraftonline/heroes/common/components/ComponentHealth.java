@@ -11,6 +11,8 @@ import org.spongepowered.api.entity.living.Living;
 import org.spongepowered.api.service.persistence.data.DataQuery;
 import org.spongepowered.api.service.persistence.data.DataView;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 
 public class ComponentHealth implements Component, HealthTracker {
@@ -22,9 +24,13 @@ public class ComponentHealth implements Component, HealthTracker {
     private static String HEALTH_BOOST_KEY = "health-boosts";
     private static String TIER = "tier";
 
+    private static String BOOST_AMOUNT = "amount";
+    private static String BOOST_EXPIRY = "expires";
+
     private Living living;
-    private double maxHealthSetting;
-    private double defaultHealth;
+    private Double baseHealth;
+    private Double healthPerLevel;
+    private Map<String, BoostData> boosts;
 
     private HeroesPlugin plugin;
 
@@ -50,21 +56,50 @@ public class ComponentHealth implements Component, HealthTracker {
         if (e == null || !(e instanceof Living)) {
             throw new UnsupportedOperationException("Cannot modify health of an inanimate character");
         }
+        // Populate fields with data
+        baseHealth = data.getDouble(new DataQuery(BASE_HEALTH_KEY)).orNull();
+        if (baseHealth == null) {
+            throw new IllegalArgumentException("A base health must be defined for the health component");
+        }
+        healthPerLevel = data.getDouble(new DataQuery(HEALTH_PER_LEVEL_KEY)).or(0.0);
+        boosts = new HashMap<>();
+        DataView view = data.getView(new DataQuery(HEALTH_BOOST_KEY)).orNull();
+        if (view != null) {
+            for (DataQuery boostQuery : view.getKeys(false)) {
+                String boostName = boostQuery.asString(".");
+                DataView boostView = view.getView(boostQuery).get();
+                double amount = boostView.getDouble(new DataQuery(BOOST_AMOUNT)).or(0.0);
+                long expiry = boostView.getLong(new DataQuery(BOOST_EXPIRY)).or(System.currentTimeMillis());
+                boosts.put(boostName, new BoostData(amount, expiry));
+            }
+        }
+        double health = baseHealth;
+        health += character.getClassTracker().getHighestLevel(character.getClassTracker().getActiveClasses())
+                * healthPerLevel;
+        long currSysTime = System.currentTimeMillis();
+        for (Entry<String, BoostData> entry : boosts.entrySet()) {
+            BoostData bData = entry.getValue();
+            if (bData.getExpiry() > currSysTime) {
+                health += bData.getAmount();
+            }
+        }
+        if (health <= 0) {
+            throw new IllegalArgumentException("Health component cannot have a calculated maximum health <= 0");
+        }
         living = (Living)e;
-        defaultHealth = living.getMaxHealth();
+        double defaultHealth = living.getMaxHealth();
+        // TODO check defaultHealth against vanilla values to prevent overwrites -- compatibility with other plugins
+        // Make sure we are always overriding players
         double ratio = living.getHealth()/living.getMaxHealth();
-        living.setMaxHealth(maxHealthSetting);
+        living.setMaxHealth(health);
         living.setHealth(living.getMaxHealth() * ratio);
     }
 
     @Override
     public void onRemove(CharacterBase character) {
-        if (living.getHealth() > 0) {
-            double ratio = living.getHealth() / living.getMaxHealth();
-            living.setMaxHealth(defaultHealth);
-            living.setHealth(defaultHealth * ratio);
-        }
-        living = null;
+        // At the moment we don't clean up after ourselves upon removal - does this matter as it is only likely to
+        // be called upon plugin shutdown? Would be considered something that might be essential for successfully
+        // uninstalling the plugin anyways
     }
 
     @Override
@@ -104,6 +139,24 @@ public class ComponentHealth implements Component, HealthTracker {
     @Override
     public void setMaxHealth(double amount) {
         living.setMaxHealth(amount);
+    }
+
+    private static class BoostData {
+        private Double amount;
+        private Long expiry;
+
+        public BoostData(Double amount, Long expiry) {
+            this.amount = amount;
+            this.expiry = expiry;
+        }
+
+        public Double getAmount() {
+            return amount;
+        }
+
+        public Long getExpiry() {
+            return expiry;
+        }
     }
 
     private static class HealthDataCombiner implements Combiner<DataView> {
