@@ -1,6 +1,7 @@
 package com.herocraftonline.heroes.api.characters;
 
 import com.herocraftonline.heroes.api.components.Component;
+import com.herocraftonline.heroes.api.components.core.ClassTracker;
 import com.herocraftonline.heroes.api.components.core.CooldownTracker;
 import com.herocraftonline.heroes.api.components.core.HealthTracker;
 import com.herocraftonline.heroes.api.components.core.ManaTracker;
@@ -101,14 +102,14 @@ public interface CharacterBase {
      * @param name The name of the component, corresponding to value of {@link Component#getName()}, case sensitive
      * @return True if the component is registered with this Hero, false otherwise
      */
-    public boolean hasComponent(String name);
+    boolean hasComponent(String name);
 
     /**
      * Retrieves a component instance attached/registered with this character, if it exists
      * @param name The name of the component, corresponding to value of {@link Component#getName()}, case sensitive
      * @return The corresponding component, or null if no matching component exists
      */
-    public Component getComponent(String name);
+    Component getComponent(String name);
 
     /**
      * Adds a component to this Character, and calls {@link Component#onAttach(CharacterBase)} with this character as
@@ -116,7 +117,7 @@ public interface CharacterBase {
      * @param component The component to register
      * @return False if an error occurs during attach, true otherwise
      */
-    public boolean registerComponent(Component component);
+    boolean registerComponent(Component component);
 
     /**
      * Removes a component from this Character, and calls {@link Component#onRemove(CharacterBase)} with this Character
@@ -124,7 +125,7 @@ public interface CharacterBase {
      * @param name The name of the component, corresponding to value of {@link Component#getName()}, case sensitive
      * @return The removed component, or null no matching component exists
      */
-    public Component unregisterComponent(String name);
+    Component unregisterComponent(String name);
 
     // Core Components
 
@@ -132,25 +133,31 @@ public interface CharacterBase {
      * @return The {@link com.herocraftonline.heroes.api.components.core.HealthTracker} component responsible for tracking
      * health on this character, or null if the component is not enabled for this character
      */
-    public HealthTracker getHealthTracker();
+    HealthTracker getHealthTracker();
 
     /**
      * @return The {@link com.herocraftonline.heroes.api.components.core.CooldownTracker} component responsible for tracking
      * cooldowns on this character, or null if the component is not enabled for this character
      */
-    public CooldownTracker getCooldownTracker();
+    CooldownTracker getCooldownTracker();
 
     /**
      * @return The {@link com.herocraftonline.heroes.api.components.core.ManaTracker} component responsible for tracking
      * mana on this character, or null if the component is not enabled for this character
      */
-    public ManaTracker getManaTracker();
+    ManaTracker getManaTracker();
 
     /**
      * @return The {@link com.herocraftonline.heroes.api.components.core.SkillTracker} component responsible for tracking
      * accessible skills and associated requirements on this character, or null if the component is not enabled for this
      * character (the character has access to no skills)
      */
-    public SkillTracker getSkillTracker();
+    SkillTracker getSkillTracker();
 
+    /**
+     * @return The {@link com.herocraftonline.heroes.api.components.core.ClassTracker} component responsible for
+     * tracking accessible/active classes on a given character - unlike other core components the guarantee is made
+     * that this component is present as it is critical to basic heroes functionality
+     */
+    ClassTracker getClassTracker();
 }
