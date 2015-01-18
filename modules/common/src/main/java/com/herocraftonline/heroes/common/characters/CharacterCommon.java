@@ -2,8 +2,13 @@ package com.herocraftonline.heroes.common.characters;
 
 import com.herocraftonline.heroes.Heroes;
 import com.herocraftonline.heroes.api.characters.CharacterBase;
+import com.herocraftonline.heroes.api.classes.CharacterClass;
+import com.herocraftonline.heroes.api.classes.CharacterClassTrait;
 import com.herocraftonline.heroes.api.components.Component;
+import com.herocraftonline.heroes.api.components.core.ClassTracker;
 import com.herocraftonline.heroes.api.effects.EffectBase;
+import com.herocraftonline.heroes.api.util.Combiner;
+import org.spongepowered.api.service.persistence.data.DataView;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -16,8 +21,8 @@ public abstract class CharacterCommon implements CharacterBase {
     private final Map<String, EffectBase> effects;
 
     public CharacterCommon() {
-        components = new HashMap<String, Component>();
-        effects = new HashMap<String, EffectBase>();
+        components = new HashMap<>();
+        effects = new HashMap<>();
     }
 
     @Override
@@ -59,7 +64,7 @@ public abstract class CharacterCommon implements CharacterBase {
     @Override
     public boolean registerComponent(Component component) {
         if (!components.containsKey(component.getName())) {
-            component.onAttach(this);
+            component.onAttach(this, getCombinedDataView(component));
             components.put(component.getName(), component);
             return true;
         } else {
@@ -68,6 +73,41 @@ public abstract class CharacterCommon implements CharacterBase {
             return false;
         }
     }
+
+    protected DataView getCombinedDataView(Component component) {
+        ClassTracker tracker = getClassTracker();
+        DataView ret = null; // TODO empty data view
+        // Legacy support for primary/secondary class hierarchy
+        Collection<CharacterClass> primaryClasses = tracker.getClassesWithTrait(CharacterClassTrait.PRIMARY);
+        Collection<CharacterClass> secondaryClasses = tracker.getClassesWithTrait(CharacterClassTrait.SECONDARY);
+        Combiner<DataView> combiner = component.getCombiner();
+        boolean flag = false;
+        if (!primaryClasses.isEmpty()) {
+            // The guarantee is made that there will be only one active
+            CharacterClass[] primary = primaryClasses.toArray(new CharacterClass[1]);
+            DataView primaryView = primary[0].getComponentSettings(component.getName());
+            // Secondary classes are only checked with a given priority if a primary class exists
+            if (!secondaryClasses.isEmpty()) {
+                CharacterClass[] secondary = secondaryClasses.toArray(new CharacterClass[1]);
+                DataView secondaryView = secondary[0].getComponentSettings(component.getName());
+                ret = combiner.combine(primaryView, secondaryView);
+            }
+            flag = true;
+        }
+        // Process/combine settings for everything else
+        for (CharacterClass cClass : tracker.getActiveClasses()) {
+            if (flag) {
+                if (cClass.hasTrait(CharacterClassTrait.PRIMARY) || cClass.hasTrait(CharacterClassTrait.SECONDARY)) {
+                    continue; // Skip - processed already
+                }
+            }
+            ret = combiner.combine(ret, cClass.getComponentSettings(component.getName()));
+            // ret first so primary/secondary are marked as higher priority
+        }
+        // Combine character specific data
+        return combiner.combine(getCharacterComponentData(component.getName()), ret);
+    }
+
 
     @Override
     public Component unregisterComponent(String name) {

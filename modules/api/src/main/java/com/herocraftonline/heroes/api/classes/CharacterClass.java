@@ -2,6 +2,7 @@ package com.herocraftonline.heroes.api.classes;
 
 import com.herocraftonline.heroes.api.characters.CharacterBase;
 import com.herocraftonline.heroes.api.components.Component;
+import org.spongepowered.api.service.persistence.data.DataView;
 
 import java.util.Collection;
 import java.util.Set;
@@ -116,6 +117,17 @@ public interface CharacterClass {
      */
     void setLevel(CharacterBase character, int level);
 
+    /**
+     * @param trait The trait to check for
+     * @return Whether the class possesses the parameter trait
+     */
+    boolean hasTrait(CharacterClassTrait trait);
+
+    /**
+     * @return A collection of traits possessed by the given class
+     */
+    Collection<CharacterClassTrait> getTraits();
+
     // Component Methods
 
     /**
@@ -132,5 +144,13 @@ public interface CharacterClass {
      * @return The corresponding component instance attached to this class if it exists, null otherwise
      */
     <T extends Component> T getComponent(String name);
+
+    /**
+     * Gets the settings stored on a character class configuration for a specific component
+     * @param name The matching return value of {@link Component#getName()}
+     * @return A DataView representation of the settings for said component, or an empty data view if no such settings
+     * exist
+     */
+    DataView getComponentSettings(String name);
 
 }

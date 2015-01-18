@@ -9,6 +9,7 @@ import com.herocraftonline.heroes.api.components.core.SkillTracker;
 import com.herocraftonline.heroes.api.effects.EffectBase;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.player.Player;
+import org.spongepowered.api.service.persistence.data.DataView;
 import org.spongepowered.api.world.Location;
 
 import java.util.Collection;
@@ -112,12 +113,18 @@ public interface CharacterBase {
     Component getComponent(String name);
 
     /**
-     * Adds a component to this Character, and calls {@link Component#onAttach(CharacterBase)} with this character as
-     * the parameter
+     * Adds a component to this Character, and calls {@link Component#onAttach(CharacterBase, DataView)} with this
+     * character as the parameter
      * @param component The component to register
      * @return False if an error occurs during attach, true otherwise
      */
     boolean registerComponent(Component component);
+
+    /**
+     * @param name  The name of the component to get settings for, matching value of {@link Component#getName()}
+     * @return A DataView representation of data stored on the given character  for the specified component
+     */
+    DataView getCharacterComponentData(String name);
 
     /**
      * Removes a component from this Character, and calls {@link Component#onRemove(CharacterBase)} with this Character
