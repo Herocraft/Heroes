@@ -4,6 +4,7 @@ import com.herocraftonline.heroes.api.characters.Creature;
 import com.herocraftonline.heroes.common.characters.CharacterCommon;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.living.Living;
+import org.spongepowered.api.service.persistence.data.DataView;
 import org.spongepowered.api.world.Location;
 
 import java.util.UUID;
@@ -34,6 +35,11 @@ public class CreatureCommon extends CharacterCommon implements Creature {
     @Override
     public UUID getUID() {
         return entity.getUniqueId();
+    }
+
+    @Override
+    public DataView getCharacterComponentData(String name) {
+        return null;
     }
 
     @Override

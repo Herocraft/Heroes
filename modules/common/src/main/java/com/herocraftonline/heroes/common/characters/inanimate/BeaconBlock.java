@@ -2,6 +2,7 @@ package com.herocraftonline.heroes.common.characters.inanimate;
 
 import org.spongepowered.api.block.BlockLoc;
 import org.spongepowered.api.entity.Entity;
+import org.spongepowered.api.service.persistence.data.DataView;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
@@ -37,5 +38,11 @@ public class BeaconBlock extends Beacon {
         String s = new StringBuilder().append(w.getUniqueID()).append(":").append(block.getPosition().toString())
                 .toString();
         return UUID.nameUUIDFromBytes(s.getBytes());
+    }
+
+    //TODO
+    @Override
+    public DataView getCharacterComponentData(String name) {
+        return null;
     }
 }

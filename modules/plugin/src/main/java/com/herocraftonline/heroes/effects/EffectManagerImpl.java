@@ -4,7 +4,7 @@ import com.google.common.base.Optional;
 import com.herocraftonline.heroes.api.effects.EffectManager;
 import com.herocraftonline.heroes.api.effects.EffectTickable;
 import com.herocraftonline.heroes.api.plugin.HeroesPlugin;
-import org.spongepowered.api.service.scheduler.RepeatingTask;
+import org.spongepowered.api.service.scheduler.Task;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -25,7 +25,7 @@ public class EffectManagerImpl implements EffectManager {
         registeredEffects = new HashSet<EffectTickable>();
         effectRemoveQueue = new HashSet<EffectTickable>();
         effectAddQueue = new HashSet<EffectTickable>();
-        Optional<RepeatingTask> t = plugin.getGame().getScheduler().runRepeatingTask(plugin, new Runnable() {
+        Optional<Task> t = plugin.getGame().getScheduler().runRepeatingTask(plugin, new Runnable() {
             @Override
             public void run() {
                 tick();

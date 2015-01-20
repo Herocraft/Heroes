@@ -140,6 +140,16 @@ public class SkillManagerImpl implements SkillManager, Command {
     }
 
     @Override
+    public boolean isSkill(String name) {
+        return skillsByName.containsKey(name.toLowerCase());
+    }
+
+    @Override
+    public Skill getSkill(String name) {
+        return skillsByName.get(name.toLowerCase());
+    }
+
+    @Override
     public Collection<Skill> getSkills() {
         return Collections.unmodifiableCollection(skillsByName.values());
     }

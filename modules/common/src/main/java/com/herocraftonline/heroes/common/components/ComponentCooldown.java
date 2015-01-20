@@ -32,8 +32,8 @@ public class ComponentCooldown implements Component, CooldownTracker {
     @Override
     public void onAttach(CharacterBase character, DataView data) {
         this.cooldowns = new HashMap<>();
-        for (String skillName : data.getKeys(false)) {
-            cooldowns.put(skillName, data.getLong(new DataQuery(skillName)).or(-1L));
+        for (DataQuery skill : data.getKeys(false)) {
+            cooldowns.put(skill.getParts().get(0), data.getLong(skill).or(-1L));
         }
         return;
     }
@@ -49,6 +49,7 @@ public class ComponentCooldown implements Component, CooldownTracker {
     }
 
     @Override
+    //TODO
     public Combiner<DataView> getCombiner() {
         return null;
     }

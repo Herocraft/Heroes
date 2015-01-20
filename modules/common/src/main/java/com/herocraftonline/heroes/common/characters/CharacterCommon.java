@@ -6,6 +6,10 @@ import com.herocraftonline.heroes.api.classes.CharacterClass;
 import com.herocraftonline.heroes.api.classes.CharacterClassTrait;
 import com.herocraftonline.heroes.api.components.Component;
 import com.herocraftonline.heroes.api.components.core.ClassTracker;
+import com.herocraftonline.heroes.api.components.core.CooldownTracker;
+import com.herocraftonline.heroes.api.components.core.HealthTracker;
+import com.herocraftonline.heroes.api.components.core.ManaTracker;
+import com.herocraftonline.heroes.api.components.core.SkillTracker;
 import com.herocraftonline.heroes.api.effects.EffectBase;
 import com.herocraftonline.heroes.api.util.Combiner;
 import org.spongepowered.api.service.persistence.data.DataView;
@@ -116,5 +120,31 @@ public abstract class CharacterCommon implements CharacterBase {
             removed.onRemove(this);
         }
         return removed;
+    }
+
+    //TODO
+    @Override
+    public HealthTracker getHealthTracker() {
+        return null;
+    }
+
+    @Override
+    public CooldownTracker getCooldownTracker() {
+        return null;
+    }
+
+    @Override
+    public ManaTracker getManaTracker() {
+        return null;
+    }
+
+    @Override
+    public SkillTracker getSkillTracker() {
+        return null;
+    }
+
+    @Override
+    public ClassTracker getClassTracker() {
+        return null;
     }
 }
